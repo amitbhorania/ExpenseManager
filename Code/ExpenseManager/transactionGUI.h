@@ -1,4 +1,4 @@
-/*\ file transaction.h
+/*\ file transactionGUI.h
  *
  *\ Brief    Header file containing class definition
  *
@@ -8,23 +8,23 @@
  *
  *
  */
-#ifndef TRANSACTION_H
-#define TRANSACTION_H
+#ifndef TRANSACTIONGUI_H
+#define TRANSACTIONGUI_H
 
 // class to handle transaction given by user
-class transaction
+class transactionGUI
 {
 private:
     double income_type;
     double payment;
     string category;
     string creditordebit;
-    transcategory transaction;
+    transcategory tranCat;
     paymentype payment;
 
 public:
     // constructor
-    transaction();
+    transactionGUI();
     // show Method
     // Method to Display Transaction Window
             ShowTransactionPage();
@@ -49,4 +49,4 @@ public:
 
 };
 
-#endif // TRANSACTION_H
+#endif // TRANSACTIONGUI_H
