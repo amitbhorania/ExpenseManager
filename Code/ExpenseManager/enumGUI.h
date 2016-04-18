@@ -1,4 +1,4 @@
-/*\file enum.h
+/*\file enumGUI.h
  *
  * \brief     Header file containing different enum definitions
  *
@@ -6,10 +6,11 @@
  *
  * Date            Author                Changes
  * 04/18/2016      Vrushali Gaikwad      Created file and adde enum definitions
+ * 04/18/2016      Amit Bhorania         Updated Header Guard defines
  *
  */
-#ifndef ENUMH_H
-#define ENUMH_H
+#ifndef ENUMGUI_H
+#define ENUMGUI_H
 
 
 // Type of Graph
@@ -23,4 +24,4 @@ enum graphType_t {
 };
 
 
-#endif // ENUMH_H
+#endif // ENUMGUI_H
