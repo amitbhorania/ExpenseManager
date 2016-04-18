@@ -1,54 +1,54 @@
-/*\file transaction.cpp
+/*\file transactionGUI.cpp
  *
- * \brief   Transaction source file containing required methods
+ * \brief   Transaction source file containing required methods for GUI
  *
  * Revision history:
  *
  * Date        Author                Changes
  * 04/18/2016  Vrushali Gaikwad      Created file and framework
- *
+ * 04/18/2016  Amit Bhorania         Updated the File for Classname
  *
  */
-#include "transaction.h"
+#include "transactionGUI.h"
 
 // constructor
-transaction::transaction()
+transactionGUI::transactionGUI()
 {
 
 }
 
 // Method to show th transaction details given by user
-transaction::showtransactionpage()
+transactionGUI::showtransactionpage()
 {
 
 }
 
-transaction::showAmounttextBox()
+transactionGUI::showAmounttextBox()
 {
 
 }
 
-transaction::showDescriptiontextBox()
+transactionGUI::showDescriptiontextBox()
 {
 
 }
 
-transaction::showCCategorytextBox()
+transactionGUI::showCCategorytextBox()
 {
 
 }
 
-transaction::showpaymenttypebox()
+transactionGUI::showpaymenttypebox()
 {
 
 }
 
-transsaction::showDatefield()
+transactionGUI::showDatefield()
 {
 
 }
 
-transaction::submitbutton()
+transactionGUI::submitbutton()
 {
 
 }
