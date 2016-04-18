@@ -2,15 +2,15 @@
  *
  * \brief dashboardfile containing required methods
  *
- * History
- * Date : 04/18/2016
- * Author : Vrushali gaikwad
- * changes : craeted dashboard
+ * Revision History  :
+ *   Date            Author             Change(Describe the changes made)
+ *   04.18.2016      Vrushali Gaikwad   Created Dashboard File
+ *   04.18.2016      Amit Bhorania      Changed the Include files
  *
  *
  */
 
-#include "dashboard.cppp"
+#include "dashboard.h"
 
 // constructor
 dashboard::dashboard()
