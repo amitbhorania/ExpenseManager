@@ -1,25 +1,18 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2016-04-17T14:28:48
-#
-#-------------------------------------------------
+QT += core
+QT -= gui
 
-QT       += core gui
+CONFIG += c++11
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+TARGET = Expense_Manager
+CONFIG += console
+CONFIG -= app_bundle
 
-TARGET = ExpenseManager
 TEMPLATE = app
 
+SOURCES += main.cpp \
+    readdatabase.cpp \
+    writedatabase.cpp
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    date.cpp \
-    transaction.cpp
-
-HEADERS  += mainwindow.h \
-    date.h \
-    transaction.h \
-    enums.h
-
-FORMS    += mainwindow.ui
+HEADERS += \
+    readdatabase.h \
+    writedatabase.h

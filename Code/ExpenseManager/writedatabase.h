@@ -14,7 +14,7 @@ private:
     PaymentType_t paymentType;	// Cash/Credit/NetBanking
     Date date;	// Transaction Date
 
-Public:
+public:
     //Constructor
     WriteDatabase();
 
