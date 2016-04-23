@@ -21,29 +21,32 @@ public:
     ReadDatabase();
 
     // Check if user name is available
-    ChkUserName(string userName, bool available);
+    ChkUserName(string userName,
+                bool available);
 
     // Get User Info
-    ReadUserInfo(string userName, string& firstName, string& lastName,
-                 string& password, string& securityAns);
+    ReadUserInfo(string userName,
+                 string& firstName,
+                 string& lastName,
+                 string& password,
+                 string& securityAns);
 
     //Get password from database
-    ReadPassword(string userName, string& password);
+    ReadPassword(string userName,
+                 string& password);
 
     //Get Security Answer
-    ReadSecurityAnswer(string username, string& securityAnswer, string& password);
+    ReadSecurityAnswer(string username,
+                       string& securityAnswer);
 
     // Get the Transaction details from Database
     ReadTransaction(int& type,
-    double& amount,
-    string& description,
-    TranCategory_t& category,
-    PaymentType_t& paymentType,
-    Date date);
+                    double& amount,
+                    string& description,
+                    TranCategory_t& category,
+                    PaymentType_t& paymentType,
+                    Date date);
 
-
-    // Read Data for graphs
-    ReadGraphData(Date firstDate, Date lastDate);
 };
 
 #endif // READDATABASE_H

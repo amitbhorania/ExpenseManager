@@ -13,6 +13,7 @@ private:
     TranCategory_t category;	// Can take a String
     PaymentType_t paymentType;	// Cash/Credit/NetBanking
     Date date;	// Transaction Date
+    bool acknowledgement;
 
 public:
     //Constructor
@@ -24,7 +25,8 @@ public:
     string userName,
     string password,
     string securityAns,
-    Date date);
+    Date date,
+    bool acknowledgement);
 
     // Store the Transaction Details to DataBase
     WriteTransaction(int type,
@@ -37,7 +39,9 @@ public:
 
 
     // Store the Transaction Details to DataBase
-    WriteNewPassword(string new_pass);
+    WriteNewPassword(string userName,
+                     string new_pass,
+                     Date date);
 
 
     //Reset the data
