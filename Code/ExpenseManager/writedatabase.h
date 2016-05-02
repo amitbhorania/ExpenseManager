@@ -1,4 +1,4 @@
-// Ankit Luv Mittal
+// Author: Ankit Luv Mittal
 
 #ifndef WRITEDATABASE_H
 #define WRITEDATABASE_H
@@ -7,14 +7,7 @@
 // Class to Write content into Database
 class WriteDatabase {
 private:
-    int type;	// Income=0 or Expense=1
-    double amount;
-    string description;
-    TranCategory_t category;	// Can take a String
-    PaymentType_t paymentType;	// Cash/Credit/NetBanking
-    Date date;	// Transaction Date
-    bool acknowledgement;
-
+;
 public:
     //Constructor
     WriteDatabase();
@@ -29,13 +22,7 @@ public:
     bool acknowledgement);
 
     // Store the Transaction Details to DataBase
-    WriteTransaction(int type,
-    double amount,
-    string description,
-    TranCategory_t category,
-    PaymentType_t paymentType,
-    Date date,
-    bool acknowledgement);
+    WriteTransaction(Transaction_t tran);
 
 
     // Store the Transaction Details to DataBase
@@ -46,6 +33,9 @@ public:
 
     //Reset the data
     ResetUserData(string userName );
+
+    //Write a vector for plotting graphs
+    WriteGraphData();
 };
 
 #endif // WRITEDATABASE_H

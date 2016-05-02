@@ -1,4 +1,4 @@
-// Ankit Luv Mittal
+// Author: Ankit Luv Mittal
 
 #include "writedatabase.h"
 #include <iostream>
@@ -17,11 +17,10 @@ WriteDatabase::WriteUserInfo(string firstName,
                 string userName,
                 string password,
                 string securityAns,
-                Date date,
-                bool acknowledgement){
+                Date date){
 
     ofstream filehandle;
-    filehandle.open("test.dat", ios::app);
+    filehandle.open("userNames.dat", ios::app);
     filehandle << userName << "\n";
     filehandle << date << "\n";
     filehandle << firstName << "\n";
@@ -29,28 +28,20 @@ WriteDatabase::WriteUserInfo(string firstName,
     filehandle << password << "\n";
     filehandle << securityAns << "\n\n" ;
     filehandle.close();
-    acknowledgement = 1;
 }
 
 // Store the Transaction Details to DataBase
-WriteDatabase:: WriteTransaction(int type,
-                    double amount,
-                    string description,
-                    TranCategory_t category,
-                    PaymentType_t paymentType,
-                    Date date,
-                    bool acknowledgement){
-
-    ofstream filehandle;
-    filehandle.open("test.dat", ios::app);
-    filehandle << date << "\n";
-    filehandle << type << "\n";
-    filehandle << amount << "\n";
-    filehandle << description << "\n";
-    filehandle << category << "\n";
-    filehandle << paymentType << "\n\n" ;
-    filehandle.close();
-    acknowledgement = 1;
+WriteDatabase:: WriteTransaction(Transaction& data){
+        ofstream filehandle;
+        cout << "Opening the test.dat file";
+        filehandle.open("userNameSpecific.dat", ios::app);
+        filehandle << data.getMonth() << "\\" << data.getDay() << "\\" <<data.getYear() << "\n";
+        filehandle << data.getType() << "\n";
+        filehandle << data.getAmount() << "\n";
+        filehandle << data.getDescription() << "\n";
+        filehandle << data.getCategory() << "\n";
+        filehandle << data.getPaymentType() << "\n\n" ;
+        filehandle.close();
 }
 
 
@@ -69,7 +60,7 @@ WriteDatabase:: WriteNewPassword(string userName,
                            firstName,
                            lastName,
                            password,
-                           securityAns)
+                           securityAns);
     password = new_pass;
     //ToDo: Need to find a way to either replace new data in the old place or atleast delete old data and add new one at the end
     //Write Info with new pass
@@ -78,7 +69,7 @@ WriteDatabase:: WriteNewPassword(string userName,
                             userName,
                             password,
                             securityAns,
-                            date)
+                            date);
 }
 
 
@@ -89,4 +80,15 @@ WriteDatabase::ResetUserData(string userName ){
     f.open("SpecificUserName.dat", ios::ate);
     f << "\n";
     f.close;
+}
+
+WriteDatabase::WriteGraphData(vector<double>& a, Date date ){
+    int i= 6;
+    int day;
+    while (i>0){
+    //ReadTransaction (date);
+       a.push_back()
+    day= date.readDay();
+    date.setDay()= day-1;
+    }
 }

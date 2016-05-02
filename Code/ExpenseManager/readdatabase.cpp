@@ -30,7 +30,7 @@
         else
                 NotAvailable = 0;
         }
-      system("pause");
+        system("pause");
         return 0;
     }
 
@@ -41,8 +41,8 @@
                                 string& lastName,
                                 string& password,
                                 string& securityAns){
-
-        ifstream f("SpecificUserName.dat");
+        string fileName = userName + ".dat";
+        ifstream f(fileName.c_str());
         string line;
         int i=0;
         while (!f.eof()) {
@@ -64,8 +64,6 @@
         if (i>4)
             break;
         }
-          system("pause");
-          return 0;
     }
 
 
@@ -96,30 +94,31 @@
     }
 
     // Get the Transaction details from Database
-    ReadDatabase:: ReadTransaction(int& type,
-                                   double& amount,
-                                   string& description,
-                                   TranCategory_t& category,
-                                   PaymentType_t& paymentType,
-                                   Date date){
+    ReadDatabase:: ReadTransaction(Transaction& data){
 
         ifstream f("SpecificUserName.dat");
         string line;
         int i=0;
+        int category_or_type_or_pay;
+        double amount;
         while (!f.eof()) {
         getline(f,line);
-        if (line == date || i>0){
+        if (line == date || i>0){ //need to work on the condition if date will be checked or not
             switch (i){
-                case 1 : istringstream (line) >> type;
+                case 1 : {istringstream (line) >> category_or_type_or_pay;
+                         data.setType((TranType_t)category_or_type_or_pay);
+                            break;}
+                case 2 : {istringstream (line) >>amount;
+                         data.setAmount(amount);
+                            break;}
+                case 3 : data.setDescription (line);
                             break;
-                case 2 : istringstream (line) >>amount;
-                            break;
-                case 3 : description = line;
-                            break;
-                case 4 : category = line;
-                            break;
-                case 5 : paymentType = line;
-                            break;
+                case 4 : {istringstream (line) >> category_or_type_or_pay;
+                         data.setCategory ((TranCategory_t) category_or_type_or_pay);
+                            break;}
+                case 5 :{istringstream (line) >> category_or_type_or_pay;
+                         data.setCategory ((PaymentType_t) cat_or_type_or_pay);
+                            break;}
                 default: 	break;
             }
             i++;
@@ -128,12 +127,5 @@
             break;
         }
     }
-      system("pause");
-    }
-
-    // Backend needs to implement readtransaction repeatedly
-    // Read Data for graphs
-   // ReadDatabase:: ReadGraphData(Date firstDate, Date lastDate){
-     //   ReadDatabase:: ReadTransaction (type, amount, description, category, paymentType, date);
-    //}
+}
 

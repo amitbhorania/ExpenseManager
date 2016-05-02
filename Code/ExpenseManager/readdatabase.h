@@ -9,13 +9,7 @@
 // Class to Read content from Database
 class ReadDatabase {
 private:
-    int type;	// Income=0 or Expense=1
-    double amount;
-    string description;
-    TranCategory_t category;	// Can take a String
-    PaymentType_t paymentType;	// Cash/Credit/NetBanking
-    Date date;	// Transaction Date
-
+;
 public:
     //Constructor
     ReadDatabase();
@@ -40,12 +34,7 @@ public:
                        string& securityAnswer);
 
     // Get the Transaction details from Database
-    ReadTransaction(int& type,
-                    double& amount,
-                    string& description,
-                    TranCategory_t& category,
-                    PaymentType_t& paymentType,
-                    Date date);
+    ReadTransaction(Transaction_t t);
 
 };
 
