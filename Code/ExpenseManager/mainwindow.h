@@ -1,3 +1,5 @@
+//Name - Vrushali Gaikwad
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 

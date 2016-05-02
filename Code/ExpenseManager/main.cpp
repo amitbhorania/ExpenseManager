@@ -1,3 +1,5 @@
+//Author- Vrushali Gaikwad
+
 #include "mainwindow.h"
 #include "logino.h"
 #include <QApplication>

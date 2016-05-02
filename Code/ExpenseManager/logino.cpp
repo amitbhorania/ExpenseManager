@@ -1,3 +1,5 @@
+//Vrushali Gaikwad
+
 #include "logino.h"
 
 Logino::Logino(QWidget* parent)

@@ -9,6 +9,8 @@
 #include <QPushButton>
 #include <QMessageBox>
 
+//Author - Vrushali Gaikwad
+
 class Logino : public QDialog
 {
     Q_OBJECT
