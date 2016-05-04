@@ -1,3 +1,5 @@
+//Author: Vrushali Gaikwad
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QString>
@@ -89,6 +91,7 @@ void MainWindow::makePlot()
     }
 
     //prepare Y axis
+    
     ui->customPlot->yAxis->setRange(0, 105);
     ui->customPlot->yAxis->setPadding(5); // a bit more space to the left border
     ui->customPlot->yAxis->setLabel("Amount");
@@ -109,58 +112,6 @@ void MainWindow::makePlot()
     expense->setData(ticks, expenseData);
 
 
-
-
-
-
-
-    //minti
-     //prepare x axis and y
-/*
-     QVector<double> datax = QVector<double>() << 1 << 2 << 3 << 4  ;
-     QVector<double> datay1 = QVector<double>() << 100 << 70 << 80 << 60;
-     QVector<double> datay2 = QVector<double>() << 60 << 50 << 40 << 30;
-
-     // set colours to Bar
-     QCPBarsGroup *group1 = new QCPBarsGroup(ui->customPlot);
-     QCPBars *bars = new QCPBars(ui->customPlot->xAxis, ui->customPlot->yAxis);
-     ui->customPlot->addPlottable(bars);
-     bars->setData(datax, datay1);
-     bars->setBrush(QColor(0, 0, 255, 50));
-     bars->setPen(QColor(0, 0, 255));
-     bars->setWidth(0.15);
-     bars->setBarsGroup(group1);
-     bars = new QCPBars(ui->customPlot->xAxis, ui->customPlot->yAxis);
-
-     QVector<QString> labels;
-     QVector<double> ticks;
-     ticks << 1 << 2 << 3 << 4;
-     labels << "jan" << "Feb" << "Mar" << "Apr";
-     ui->customPlot->xAxis->setAutoTicks(false);
-     ui->customPlot->xAxis->setAutoTickLabels(false);
-     ui->customPlot->xAxis->setTickVector(ticks);
-     ui->customPlot->xAxis->setTickVectorLabels(labels);
-     ui->customPlot->xAxis->setTickLabelRotation(60);
-     ui->customPlot->xAxis->setSubTickCount(0);
-     ui->customPlot->xAxis->setTickLength(0, 4);
-     ui->customPlot->xAxis->grid()->setVisible(true);
-
-
-     ui->customPlot->addPlottable(bars);
-     bars->setData(datax, datay2);
-     bars->setBrush(QColor(180, 00, 120, 50));
-     bars->setPen(QColor(180, 00, 120));
-     bars->setWidth(0.15);
-     bars->setBarsGroup(group1);
-
-     bars = new QCPBars(ui->customPlot->xAxis, ui->customPlot->yAxis);
-     ui->customPlot->addPlottable(bars);
-     ui->customPlot->xAxis->setRange(0.1, 4.9);
-     ui->customPlot->yAxis->setRange(0, 105);
-     ui->customPlot->xAxis->setAutoTickStep(false);
-     ui->customPlot->xAxis->setTickStep(1);
-
-*/
      //legends
      ui->customPlot->legend->setVisible(true);
      ui->customPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignTop|Qt::AlignHCenter);
