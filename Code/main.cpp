@@ -1,15 +1,15 @@
 //Author- Vrushali Gaikwad
 
 #include "mainwindow.h"
-#include "addexpense.h"
+#include "Adding.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow* mainWindow = new MainWindow();
-    AddExpense* addexp = new AddExpense(mainWindow);
-    addexp->show();
+    Adding* add = new Adding(mainWindow);
+    add->show();
     //mainWindow->show();
 
     return a.exec();

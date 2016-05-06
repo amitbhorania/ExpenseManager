@@ -3,54 +3,56 @@
 * \brief	Date Source File containing required methods
 *
 * Revision History  :
-*   Date            Author          Change(Describe the changes made)
-*   04.17.2016      Amit Bhorania   Created File and Framework
+*   Date            Author               Change(Describe the changes made)
+*   05.03.2016      Vrushali Ggaikwad    Created File and Framework
 *
 *
 */
 
+
 #include "date.h"
 
 // Constructor
-Date::Date()
+Date::Date(int month, int day, int year):month(month), day(day), year(year)
 {
-
+    // Nothing to Add here
 }
 
 // Get Methods
-Date::getMonth()
+int Date::getMonth()
 {
-
+    return this->month;
 }
 
-Date::getDay()
+int Date::getDay()
 {
-
+    return this->day;
 }
 
-Date::getYear()
+int Date::getYear()
 {
-
+    return this->year;
 }
 
 // Set Methods
-Date::setMonth()
+void Date::setMonth(int month)
 {
-
+    this->month = month;
 }
 
-Date::setDay()
+void Date::setDay(int day)
 {
-
+    this->day = day;
 }
 
-Date::setYear()
+void Date::setYear(int year)
 {
-
+    this->year = year;
 }
 
+#if 0
 // Get a Date String to print
-Date::getDateString()
+string Date::getDateString()
 {
-
 }
+#endif

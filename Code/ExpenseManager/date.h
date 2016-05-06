@@ -3,14 +3,16 @@
 * \brief	Date Header File containing class definition
 *
 * Revision History  :
-*   Date            Author          Change(Describe the changes made)
-*   04.17.2016      Amit Bhorania   Created File and added members and methods
+*   Date            Author              Change(Describe the changes made)
+*   05.03.2016      Vrushali gaikwad    Created File and added members and methods
 *
 *
 */
 
 #ifndef DATE_H
 #define DATE_H
+
+#include <string>
 
 // Date Class to handle date in Transaction Entries
 class Date
@@ -21,18 +23,19 @@ private:
     int year;
 public:
     // Constructor
-    Date();
+    Date(int month = 1, int day = 1, int year = 2016);
 
     // Get/Set Methods
-    getMonth();
-    getDay();
-    getYear();
-    setMonth();
-    setDay();
-    setYear();
+    int getMonth();
+    int getDay();
+    int getYear();
 
-    // Get a Date String to print
-    getDateString();
+    void setMonth(int month);
+    void setDay(int day);
+    void setYear(int year);
+
+    // Get a Date as String
+    //string getDateString();
 };
 
 #endif // DATE_H
