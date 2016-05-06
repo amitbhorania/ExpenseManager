@@ -1,40 +1,58 @@
-
-// Author: Ankit Luv Mittal
+/*\file	ReadDatabase.h
+*
+* \brief	ReadDatabase Header File containing class definition
+*
+* Revision History  :
+*   Date            Author              Change(Describe the changes made)
+*   05.06.2016      Ankit Luv Mittal    Combined with other header files and class definition
+*
+*
+*/
 
 #ifndef READDATABASE_H
 #define READDATABASE_H
 
+//Header Files
+#include <writedatabase.h>
+#include <transaction.h>
+#include <date.h>
+#include <enums.h>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <fstream>
+using namespace std;
 
-
-// Class to Read content from Database
+// Read all content from Database
 class ReadDatabase {
 private:
-;
+    String fileName;
+    string userName;
 public:
-    //Constructor
-    ReadDatabase();
+    //Create file Name corresponding to user or a default file
+    ReadDatabase(string userName = "ExpenseManager");
 
     // Check if user name is available
     ChkUserName(string userName,
                 bool available);
 
-    // Get User Info
+    //Load User Info from Database
     ReadUserInfo(string userName,
                  string& firstName,
                  string& lastName,
                  string& password,
                  string& securityAns);
 
-    //Get password from database
+    //Load password from database
     ReadPassword(string userName,
                  string& password);
 
-    //Get Security Answer
+    //Load Security Answer
     ReadSecurityAnswer(string username,
                        string& securityAnswer);
 
-    // Get the Transaction details from Database
-    ReadTransaction(Transaction_t t);
+    // Load the Transaction details from Database
+    ReadTransaction(Transaction_t& t);
 
 };
 

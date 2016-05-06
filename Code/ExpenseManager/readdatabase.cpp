@@ -1,23 +1,66 @@
+/*\file	ReadDatabase.h
+*
+* \brief	ReadDatabase Header File containing class definition
+*
+* Revision History  :
+*   Date            Author              Change(Describe the changes made)
+*   05.06.2016      Ankit Luv Mittal    Combined with other header files and class definition
+*
+*
+*/
 
-// Author: Ankit Luv Mittal
 
 #include "readdatabase.h"
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <fstream>
 
 
-    //Constructor
-    ReadDatabase:: ReadDatabase(){
-
+    // create fileName variable corresponding to specific userName
+    ReadDatabase:: ReadDatabase(string userName
+                                ): userName(userName)
+    {
+    this->fileName =userName + ".dat";
     }
 
+    // Load Transaction details: Date, Type, Category, Amount, Description from Database
+    ReadDatabase:: ReadTransaction(Transaction& data){
+
+        ifstream f(this->fileName.c_str());
+        string line;
+        int i=0;
+        int type_or_category_or_paymentType;
+        double amount;
+        while (!f.eof()) {
+            getline(f,line);
+            if (line == date || i>0){ //need to work on the condition if date will be checked or not
+                switch (i){
+                    case 1 : {istringstream (line) >> type_or_category_or_paymentType;
+                             data.setType((TranType_t)type_or_category_or_paymentType);
+                                break;}
+                    case 2 : {istringstream (line) >>amount;
+                             data.setAmount(amount);
+                                break;}
+                    case 3 : data.setDescription (line);
+                                break;
+                    case 4 : {istringstream (line) >> type_or_category_or_paymentType;
+                             data.setCategory ((TranCategory_t) type_or_category_or_paymentType);
+                                break;}
+                    case 5 :{istringstream (line) >> type_or_category_or_paymentType;
+                             data.setCategory ((PaymentType_t) type_or_category_or_paymentType);
+                                break;}
+                    default: 	break;
+                }
+                i++;
+            }
+            if (i > 5){
+                i=0;
+            }
+        }
+    }
+
+#if 0
     // Check if user name is available
     ReadDatabase:: ChkUserName(string userName,
                                bool& NotAvailable){
-
-        ifstream f("UserNames.dat");
+        ifstream f("userNames.dat");
         string line;
         while (!f.eof()) {
         getline(f,line);
@@ -30,8 +73,6 @@
         else
                 NotAvailable = 0;
         }
-        system("pause");
-        return 0;
     }
 
 
@@ -41,8 +82,8 @@
                                 string& lastName,
                                 string& password,
                                 string& securityAns){
-        string fileName = userName + ".dat";
-        ifstream f(fileName.c_str());
+
+        ifstream f("userNames.dat");
         string line;
         int i=0;
         while (!f.eof()) {
@@ -67,7 +108,7 @@
     }
 
 
-    //Get password from database
+    //Get previously stored password from database
     ReadDatabase:: ReadPassword(string userName,
                                 string& password){
 
@@ -80,7 +121,7 @@
                                     NoUse3);
     }
 
-    //Get Security Answer
+    //Get previously stored Security Answer from backend
     ReadDatabase:: ReadSecurityAnswer(string userName,
                                       string& securityAnswer){
 
@@ -93,39 +134,4 @@
                                     securityAnswer);
     }
 
-    // Get the Transaction details from Database
-    ReadDatabase:: ReadTransaction(Transaction& data){
-
-        ifstream f("SpecificUserName.dat");
-        string line;
-        int i=0;
-        int category_or_type_or_pay;
-        double amount;
-        while (!f.eof()) {
-        getline(f,line);
-        if (line == date || i>0){ //need to work on the condition if date will be checked or not
-            switch (i){
-                case 1 : {istringstream (line) >> category_or_type_or_pay;
-                         data.setType((TranType_t)category_or_type_or_pay);
-                            break;}
-                case 2 : {istringstream (line) >>amount;
-                         data.setAmount(amount);
-                            break;}
-                case 3 : data.setDescription (line);
-                            break;
-                case 4 : {istringstream (line) >> category_or_type_or_pay;
-                         data.setCategory ((TranCategory_t) category_or_type_or_pay);
-                            break;}
-                case 5 :{istringstream (line) >> category_or_type_or_pay;
-                         data.setCategory ((PaymentType_t) cat_or_type_or_pay);
-                            break;}
-                default: 	break;
-            }
-            i++;
-        }
-        if (i > 5){
-            break;
-        }
-    }
-}
-
+#endif
