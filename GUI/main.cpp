@@ -1,16 +1,13 @@
-//Author- Vrushali Gaikwad
-
-#include "mainwindow.h"
-#include "Adding.h"
+#include "dashboard.h"
 #include <QApplication>
-
+#include "addexpense.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow* mainWindow = new MainWindow();
-    Adding* add = new Adding(mainWindow);
-    add->show();
-    //mainWindow->show();
+    Dashboard w;
+    w.show();
+    //AddExpense e;
+    //e.show();
 
     return a.exec();
 }

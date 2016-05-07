@@ -1,5 +1,5 @@
-#ifndef ADDEXPENSE_H
-#define ADDEXPENSE_H
+#ifndef ADDINCOME_H
+#define ADDINCOME_H
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -12,33 +12,33 @@
 #include <QDateTime>
 #include <QComboBox>
 
-class AddExpense : public QWidget
+class AddIncome : public QWidget
 {
     Q_OBJECT
 public:
-    explicit AddExpense(QWidget *parent = 0);
-    ~AddExpense();
+    explicit AddIncome(QWidget *parent = 0);
+    ~AddIncome();
 
 private:
-    QComboBox *categoryBox;
     QComboBox *DateBox;
     QComboBox *DateDayBox;
     QComboBox *DateYearBox;
-
+    QComboBox *categoryBox;
     QLabel* userDate;
     QLabel* todaysDate;
     QLineEdit* userLineDate;
+    QComboBox *SourceofIncomeBox;
 
     QLabel* userCategory;
     QLineEdit* userLineCat;
 
+    QLabel* userPaymentType;
+    QLineEdit* userLinePayment;
+
     QLabel* userPrice;
     QLineEdit* userLinePrice;
 
-    QComboBox *PaymentBox;
-
     QLabel* userPayment;
-    QLineEdit* userLinePayment;
 
     QLabel* userDescription;
     QLineEdit* userLineDescription;
@@ -53,4 +53,4 @@ public slots:
     void OnAdd();
 };
 
-#endif // ADDEXPENSE_H
+#endif // ADDINCOME_H
