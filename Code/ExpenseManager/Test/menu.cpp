@@ -41,7 +41,13 @@ void Menu::performAction()
         break;
 
     case 2:
+    {
         cout << "\nChoice 2 View Transaction Selected";
+        Transaction entry1;
+        Transaction entry2;
+        entry1.getTransactionDetails();
+        //entry2.getTransactionDetails();
+    }
         break;
     case 3:
         cout << "\nChoice 3 Plot Graph Selected";

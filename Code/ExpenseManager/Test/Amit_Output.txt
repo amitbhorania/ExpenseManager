@@ -26,3 +26,45 @@ Expense Entry
 6
 0
 
+4\24\2016
+1
+100
+Bus Fare
+0
+2
+
+1\1\2016
+1
+0
+Expense Entry
+6
+0
+
+4\24\2016
+1
+100
+Bus Fare
+0
+2
+
+1\1\2016
+1
+0
+Expense Entry
+6
+0
+
+4\24\2016
+1
+100
+Bus Fare
+0
+2
+
+1\1\2016
+1
+0
+Expense Entry
+6
+0
+

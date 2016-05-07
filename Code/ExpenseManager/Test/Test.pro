@@ -13,11 +13,13 @@ SOURCES += main.cpp \
     date.cpp \
     menu.cpp \
     transaction.cpp \
-    writeDB.cpp
+    writeDB.cpp \
+    readDB.cpp
 
 HEADERS += \
     date.h \
     enums.h \
     menu.h \
     transaction.h \
-    writeDB.h
+    writeDB.h \
+    readDB.h

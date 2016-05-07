@@ -18,7 +18,7 @@
 
 using namespace std;
 
-// Class for Transaction Entry
+// Transaction Entry
 class Transaction: public Date
 {
 private:
@@ -41,7 +41,7 @@ public:
             );
 
     // Method to Get the Transaction details given by User
-    getTransactionDetails();
+    void getTransactionDetails();
 
     // Send the Transaction Details to DataBase to make an entry
     void sendTransactionToDatabase();
