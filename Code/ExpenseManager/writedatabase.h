@@ -1,24 +1,48 @@
-// Ankit Luv Mittal
-
+/*\file	WriteDatabase.h
+*
+* \brief	WriteDatabase Header File containing class definition
+*
+* Revision History  :
+*   Date            Author              Change(Describe the changes made)
+*   05.06.2016      Ankit Luv Mittal    Combined with other header files and class definition
+*
+*
+*/
 #ifndef WRITEDATABASE_H
 #define WRITEDATABASE_H
 
+//Header Files
+#include <readdatabase.h>
+#include <transaction.h>
+#include <date.h>
+#include <enums.h>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <fstream>
+using namespace std;
 
-// Class to Write content into Database
+// Write content into Database
 class WriteDatabase {
 private:
-    int type;	// Income=0 or Expense=1
-    double amount;
-    string description;
-    TranCategory_t category;	// Can take a String
-    PaymentType_t paymentType;	// Cash/Credit/NetBanking
-    Date date;	// Transaction Date
-    bool acknowledgement;
-
+string userName;
+string fileName;
 public:
     //Constructor
-    WriteDatabase();
+    WriteDatabase(string userName = "ExpenseManager");
 
+    // Store the Transaction Details to DataBase
+    WriteTransaction(Transaction_t tran);
+
+    //Reset the data
+    ResetUserData(string userName );
+
+
+#if 0
+    // Store the Transaction Details to DataBase
+    WriteNewPassword(string userName,
+                     string new_pass,
+                     Date date);
     //Store User Info
     WriteUserInfo(string firstName,
     string lastName,
@@ -28,24 +52,8 @@ public:
     Date date,
     bool acknowledgement);
 
-    // Store the Transaction Details to DataBase
-    WriteTransaction(int type,
-    double amount,
-    string description,
-    TranCategory_t category,
-    PaymentType_t paymentType,
-    Date date,
-    bool acknowledgement);
+#endif
 
-
-    // Store the Transaction Details to DataBase
-    WriteNewPassword(string userName,
-                     string new_pass,
-                     Date date);
-
-
-    //Reset the data
-    ResetUserData(string userName );
 };
 
 #endif // WRITEDATABASE_H
