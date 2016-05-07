@@ -9,6 +9,7 @@
 Dashboard::Dashboard(QWidget *parent)
     : QWidget(parent)
 {
+    //setStyleSheet("background: url(E:/Stevens/C++/Projects/Dashboard_final/images/background1.jpg)");
     showUserName();
     showTimeline();
     showButtons();
@@ -24,6 +25,7 @@ Dashboard::Dashboard(QWidget *parent)
     //setStyleSheet("background: url(E:/Stevens/C++/Projects/Dashboard_final/images/background1.jpg)");
     connect(timelineCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(getTimeline(int)));
     connect(addExpenseButton, SIGNAL(clicked()), this, SLOT(showExpenseWindow()));
+    connect(addIncomeButton, SIGNAL(clicked()), this, SLOT(showIncomeWindow()));
 }
 
 // Show User Name in Dashboard

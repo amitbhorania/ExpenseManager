@@ -10,6 +10,7 @@
 #include <QComboBox>
 #include "qcustomplot.h"
 #include "addexpense.h"
+#include "addincome.h"
 
 class Dashboard : public QWidget
 {
@@ -78,11 +79,13 @@ private:
     QCPBars *expenseGraph;
     QVector<QString> labels;
     QVector<double> ticks;
+
     // Timeline_Value
-    // 1 - Daily
-    // 2 - Monthly
-    // 3 - Yearly
+    // 0 - Daily
+    // 1 - Monthly
+    // 2 - Yearly
     int timelineVal;
+
     // Income and Expense Data to show in Graph
     QVector<double> incomeData, expenseData;
     QGroupBox *graphBox;
@@ -97,6 +100,8 @@ private:
     // Expense Window
     AddExpense expenseWindow;
 
+    // Income Window
+    AddIncome incomeWindow;
 #if 0
     QString *monthStr;
     QString *prevBalanceStr;
@@ -117,6 +122,12 @@ public slots:
         //expenseWindow = new AddExpense();
         //expenseWindow->show();
         expenseWindow.show();
+    };
+    void showIncomeWindow() {
+        //QWidget *window = new QWidget();
+        //expenseWindow = new AddExpense();
+        //expenseWindow->show();
+        incomeWindow.show();
     };
 };
 
