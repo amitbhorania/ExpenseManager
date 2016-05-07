@@ -11,7 +11,7 @@ using namespace std;
 void WriteDatabase:: WriteTransaction(Transaction& data)
 {
     ofstream filehandle;
-    cout << "Opening the test.dat file";
+    cout << "\nOpening the Amit_Output.txt file";
     filehandle.open("E:\\Stevens\\C++\\Projects\\GitHub\\ExpenseManager\\Code\\ExpenseManager\\Test\\Amit_Output.txt", ios::app);
     filehandle << data.getMonth() << "\\" << data.getDay() << "\\" <<data.getYear() << "\n";
     filehandle << data.getType() << "\n";
@@ -20,7 +20,7 @@ void WriteDatabase:: WriteTransaction(Transaction& data)
     filehandle << data.getCategory() << "\n";
     filehandle << data.getPaymentType() << "\n\n" ;
     filehandle.close();
-    cout << "Operation completed";
+    cout << "\nOperation completed";
 }
 
 //Constructor

@@ -11,6 +11,7 @@
 
 #include "transaction.h"
 #include "writeDB.h"
+#include "readDB.h"
 
 // Constructor
 Transaction::Transaction(
@@ -27,13 +28,13 @@ Transaction::Transaction(
 
 }
 
-#if 0
 // Method to Get the Transaction details given by User
-Transaction::getTransactionDetails()
+void Transaction::getTransactionDetails()
 {
-
+    // Create Database Object and Call the method to read Transaction
+    ReadDatabase   RDB;
+    RDB.ReadTransaction(*this);
 }
-#endif
 
 // Send the Transaction Details to DataBase to make an entry
 void Transaction::sendTransactionToDatabase()
