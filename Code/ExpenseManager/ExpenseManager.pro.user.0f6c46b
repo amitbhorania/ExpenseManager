@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.6.0, 2016-04-23T16:07:05. -->
+<!-- Written by QtCreator 3.6.1, 2016-04-22T00:56:58. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{afa8140a-8911-478e-ad86-80c2cbaad9fa}</value>
+  <value type="QByteArray">{0f6c46ba-ebe6-49a9-a512-6ff39db28245}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -282,12 +282,12 @@
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">ExpenseManager</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Expense_Manager</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:E:/Stevens/C++/Projects/GitHub/ExpenseManager/Code/ExpenseManager/ExpenseManager.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/mitta/OneDrive/CPE/EE 810 C++/programs/Expense_Manager/Expense_Manager.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">ExpenseManager.pro</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">Expense_Manager.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseTerminal">true</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
