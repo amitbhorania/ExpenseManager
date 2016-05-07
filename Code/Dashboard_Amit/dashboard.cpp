@@ -1,11 +1,33 @@
 #include "dashboard.h"
 
+#define CURRENCY "US$ "
 #define GUI_FONTTYPE  "Helvetica"
 //#define GUI_FONTTYPE  "Cambria"
 #define GUI_FONTSIZE  11
 
+// Call individual methods to show each part of Dashboard
+Dashboard::Dashboard(QWidget *parent)
+    : QWidget(parent)
+{
+    showUserName();
+    showTimeline();
+    showButtons();
+    combineTimelineButtons();
+    showFigures();
+    combineFiguresTimelineButtons();
+    showGraph();
+    combineGraphFiguresTimelineButtons();
+    showMainLayout();
+
+    //setStyleSheet("background: url(E:/Stevens/C++/Projects/Dashboard_final/images/background_home.jpg)");
+    //qApp->setStyleSheet("QWidget {background-image: url(./background_home.jpg) }");
+    //setStyleSheet("background: url(E:/Stevens/C++/Projects/Dashboard_final/images/background1.jpg)");
+    connect(timelineCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(getTimeline(int)));
+    connect(addExpenseButton, SIGNAL(clicked()), this, SLOT(showExpenseWindow()));
+}
+
 // Show User Name in Dashboard
-Dashboard::showUserName() {
+void Dashboard::showUserName() {
     userNameLabel = new QLabel("Amit Bhorania");
     userNameLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
     //userNameLabel->setStyleSheet("QLabel { background-color : rgb(0, 128, 128); color : white; }");
@@ -17,45 +39,42 @@ Dashboard::showUserName() {
 }
 
 // Show Timeline in Dashboard
-Dashboard::showTimeline() {
+void Dashboard::showTimeline() {
     timelineLabel = new QLabel("Timeline:");
     timelineLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
     timelineCombo = new QComboBox();
     timelineCombo->addItem("Daily");
     timelineCombo->addItem("Monthly");
     timelineCombo->addItem("Yearly");
-    QGroupBox *timelineBox = new QGroupBox();
-    QHBoxLayout *timelineLayout = new QHBoxLayout();
+    timelineCombo->setCurrentIndex(1);
+    timelineBox = new QGroupBox();
+    timelineLayout = new QHBoxLayout();
     timelineLayout->addWidget(timelineLabel,0,Qt::AlignLeft);
     timelineLayout->addWidget(timelineCombo,0,Qt::AlignLeft);
     timelineBox->setLayout(timelineLayout);
 }
 
-Dashboard::showButtons() {
+// Show Buttons in Dashboard
+void Dashboard::showButtons() {
     addIncomeButton = new QPushButton("Income");
     addExpenseButton = new QPushButton("Expense");
     viewTransactionButton = new QPushButton("View Transaction");
-    QGroupBox *buttonsBox = new QGroupBox();
-    QGridLayout *buttonsLayout = new QGridLayout();
+    buttonsBox = new QGroupBox();
+    buttonsLayout = new QGridLayout();
     buttonsLayout->addWidget(addIncomeButton,0,0);
     buttonsLayout->addWidget(addExpenseButton,0,1);
     buttonsLayout->addWidget(viewTransactionButton,1,0,1,2);
     buttonsBox->setLayout(buttonsLayout);
 }
 
-Dashboard::Dashboard(QWidget *parent)
-    : QWidget(parent)
-{
-    showUserName();
-    showTimeline();
-    showButtons();
-
-    // Combine TimeLine & Buttons
-    QVBoxLayout *groupTimelineButtonsLayout = new QVBoxLayout();
+// Combine TimeLine & Buttons in Dashboard
+void Dashboard::combineTimelineButtons() {
+    groupTimelineButtonsLayout = new QVBoxLayout();
     groupTimelineButtonsLayout->addWidget(timelineBox, 0);
     groupTimelineButtonsLayout->addWidget(buttonsBox, 0);
+}
 
-    // Figures
+void Dashboard::showFigures() {
     monthLabel = new QLabel("Month:");
     monthLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
     //monthStr = new QString();
@@ -83,8 +102,8 @@ Dashboard::Dashboard(QWidget *parent)
     totalBalanceLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
     totalBalanceValueLabel = new QLabel("US$ 337.00");
     totalBalanceValueLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
-    QGroupBox *figureBox = new QGroupBox();
-    QGridLayout *figureLayout = new QGridLayout();
+    figureBox = new QGroupBox();
+    figureLayout = new QGridLayout();
     figureLayout->addWidget(monthLabel, 0, 0);
     figureLayout->addWidget(monthValueLabel, 0, 1);
     figureLayout->addWidget(previousBalanceLabel, 1, 0);
@@ -98,23 +117,23 @@ Dashboard::Dashboard(QWidget *parent)
     figureLayout->addWidget(totalBalanceLabel, 5, 0);
     figureLayout->addWidget(totalBalanceValueLabel, 5, 1);
     figureBox->setLayout(figureLayout);
+    //figureBox->setStyleSheet("background: url(E:/Stevens/C++/Projects/Dashboard_final/images/1.jpg)");
+}
 
-    // Combine Figures & Timeline-Buttons
-    QHBoxLayout *groupFiguresTimelineButtonsLayout = new QHBoxLayout();
+// Combine Figures & Timeline-Buttons
+void Dashboard::combineFiguresTimelineButtons() {
+    groupFiguresTimelineButtonsLayout = new QHBoxLayout();
     groupFiguresTimelineButtonsLayout->addWidget(figureBox, 0);
     groupFiguresTimelineButtonsLayout->addLayout(groupTimelineButtonsLayout, 0);
+}
 
-    ///////////////////////////////////////////
-    /// Graph
-    ///////////////////////////////////////////
-
+void Dashboard::showGraph() {
     graphLabel = new QLabel("Graph");
     graphLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
     //graphLabel->setStyleSheet("QLabel { background-color : rgb(0, 128, 128); color : white; }");
     graphLabel->setStyleSheet("QLabel { color : rgb(0, 128, 128); }");
 
     customPlot = new QCustomPlot();
-
     graph = new QCPBarsGroup(customPlot);
 
     // Income Bar Graph
@@ -143,60 +162,41 @@ Dashboard::Dashboard(QWidget *parent)
     expenseGraph->setBrush(QColor(1, 92, 191, 50));
     expenseGraph->setWidth(0.2);
 
-    // Timeline_Value
-    // 0 -
-    // 1 - Daily
-    // 2 - Monthly
-    // 3 - Yearly
-    int timeline_val = 0;
-
-    QVector<QString> labels;
-    QVector<double> ticks;
-
     // Prepare X Axis
-    if(timeline_val == 2) {
-        // Monthly
+    if(timelineVal == 0) {
+        // Daily
         ticks << 1 << 2 << 3 << 4 << 5 << 6;
-        labels << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June";
-        customPlot->xAxis->setAutoTicks(false);
-        customPlot->xAxis->setAutoTickLabels(false);
-        customPlot->xAxis->setTickVector(ticks);
-        customPlot->xAxis->setTickVectorLabels(labels);
-        customPlot->xAxis->setTickLabelRotation(60);
-        customPlot->xAxis->setSubTickCount(0);
-        customPlot->xAxis->setTickLength(0, 4);
-        customPlot->xAxis->grid()->setVisible(true);
-        customPlot->xAxis->setRange(0, 12);
+        labels << "Mon" << "Tue" << "Wed" << "Thur" << "Fri" << "Sat";
+        incomeData << 100 << 70 << 65 << 60 << 50 << 55 << 82;
+        expenseData << 60 << 50 << 40 << 30 << 25 << 20 << 90;
     }
-    else if(timeline_val == 3) {
+    else if(timelineVal == 2) {
         // Yearly
         ticks << 1 << 2 << 3 << 4 << 5 << 6;
         labels << "2011" << "2012" << "2013" << "2014" << "2015" << "2016";
-        customPlot->xAxis->setAutoTicks(false);
-        customPlot->xAxis->setAutoTickLabels(false);
-        customPlot->xAxis->setTickVector(ticks);
-        customPlot->xAxis->setTickVectorLabels(labels);
-        customPlot->xAxis->setTickLabelRotation(60);
-        customPlot->xAxis->setSubTickCount(0);
-        customPlot->xAxis->setTickLength(0, 4);
-        customPlot->xAxis->grid()->setVisible(true);
-        customPlot->xAxis->setRange(0, 7);
+        incomeData << 50 << 60 << 80 << 100 << 70 << 90 << 82;
+        expenseData << 70 << 60 << 75 << 50 << 75 << 85 << 10;
+
     } else {
-        // Daily
-        ticks << 1 << 2 << 3 << 4 << 5 << 6 << 7;
-        labels << "Mon" << "Tue" << "Wed" << "Thur" << "Fri" << "Sat" << "Sun";
-        customPlot->xAxis->setAutoTicks(false);
-        customPlot->xAxis->setAutoTickLabels(false);
-        customPlot->xAxis->setTickVector(ticks);
-        customPlot->xAxis->setTickVectorLabels(labels);
-        customPlot->xAxis->setTickLabelRotation(60);
-        customPlot->xAxis->setSubTickCount(0);
-        customPlot->xAxis->setTickLength(0, 4);
-        customPlot->xAxis->grid()->setVisible(true);
-        customPlot->xAxis->setRange(0, 8);
+        // Monthly
+        ticks << 1 << 2 << 3 << 4 << 5 << 6;
+        labels << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June";
+        incomeData << 70 << 80 << 75 << 90 << 90 << 90 << 90;
+        expenseData << 60 << 55 << 100 << 90 << 90 << 90 << 90;
     }
 
+    customPlot->xAxis->setAutoTicks(false);
+    customPlot->xAxis->setAutoTickLabels(false);
+    customPlot->xAxis->setTickVector(ticks);
+    customPlot->xAxis->setTickVectorLabels(labels);
+    customPlot->xAxis->setTickLabelRotation(60);
+    customPlot->xAxis->setSubTickCount(0);
+    customPlot->xAxis->setTickLength(0, 4);
+    customPlot->xAxis->grid()->setVisible(true);
+    customPlot->xAxis->setRange(0, 7);
+
     // Prepare Y Axis
+    // TODO - Set the range according to Maximum value of the input data from Database
     customPlot->yAxis->setRange(0, 105);
     customPlot->yAxis->setPadding(5); // a bit more space to the left border
     customPlot->yAxis->setLabel("Amount");
@@ -208,17 +208,12 @@ Dashboard::Dashboard(QWidget *parent)
     gridPen.setStyle(Qt::DotLine);
     customPlot->yAxis->grid()->setSubGridPen(gridPen);
 
-    // Income and Expense Data
-    QVector<double> incomeData, expenseData;
-    incomeData << 100 << 70 << 65 << 60 << 50 << 55 << 82;
-    expenseData << 60 << 50 << 40 << 30 << 25 << 20 << 90;
-
     incomeGraph->setData(ticks, incomeData);
     expenseGraph->setData(ticks, expenseData);
 
     //legends
     customPlot->legend->setVisible(true);
-    customPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignTop|Qt::AlignHCenter);
+    customPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignTop|Qt::AlignRight);
     customPlot->legend->setBrush(QColor(255, 255, 255, 200));
     QPen legendPen;
     legendPen.setColor(QColor(130, 130, 130, 200));
@@ -228,39 +223,146 @@ Dashboard::Dashboard(QWidget *parent)
     customPlot->legend->setFont(legendFont);
     customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 
-    QGroupBox *graphBox = new QGroupBox();
-    QVBoxLayout *graphLayout = new QVBoxLayout();
+    graphBox = new QGroupBox();
+    graphLayout = new QVBoxLayout();
     graphLayout->addWidget(graphLabel,0,Qt::AlignTop);
     graphLayout->addWidget(customPlot,20);
     graphBox->setLayout(graphLayout);
+}
 
-    // Combine Figure-Button and Graph Layout
-    QVBoxLayout *groupGraphFiguresTimelineButtonsLayout = new QVBoxLayout();
+// Combine Figure-Button-Timeline and Graph Layout
+void Dashboard::combineGraphFiguresTimelineButtons() {
+    groupGraphFiguresTimelineButtonsLayout = new QVBoxLayout();
     groupGraphFiguresTimelineButtonsLayout->addLayout(groupFiguresTimelineButtonsLayout);
     groupGraphFiguresTimelineButtonsLayout->addWidget(graphBox);
+}
 
-    // Main Layout
-    QVBoxLayout *mainLayout = new QVBoxLayout();
+// Add all the created layouts in the main layout
+void Dashboard::showMainLayout() {
+    mainLayout = new QVBoxLayout();
     mainLayout->addWidget(userNameBox, 0, Qt::AlignTop);
-    //mainLayout->addWidget(timelineBox, 0, Qt::AlignTop);
     mainLayout->addLayout(groupGraphFiguresTimelineButtonsLayout, 10);
-    //mainLayout->addWidget(figureBox);
-    //mainLayout->addWidget(graphBox);
-    //mainLayout->addWidget(buttonsBox);
     setLayout(mainLayout);
     setWindowTitle("Dash Board");
     setFixedSize(500,500);
+}
 
-#if 0
-    QString newpath (":/images/background.jpg");
-    QPixmap pixmap = QPixmap(newpath).scaled(this->size());
-    QPalette palette(this->palette());
-    palette.setBrush(QPalette::Background, QBrush(pixmap));
-    this->setPalette(palette);
-#endif
+void Dashboard::updateGraph(int timeline) {
+    ticks.clear();
+    labels.clear();
+    incomeData.clear();
+    expenseData.clear();
+
+    if(timeline == 0) {
+        // Daily
+        ticks << 1 << 2 << 3 << 4 << 5 << 6;
+        labels << "Mon" << "Tue" << "Wed" << "Thur" << "Fri" << "Sat";
+        incomeData << 100 << 70 << 65 << 60 << 50 << 55 << 82;
+        expenseData << 60 << 50 << 40 << 30 << 25 << 20 << 90;
+    }
+    else if(timeline == 2) {
+        // Yearly
+        ticks << 1 << 2 << 3 << 4 << 5 << 6;
+        labels << "2011" << "2012" << "2013" << "2014" << "2015" << "2016";
+        incomeData << 50 << 60 << 80 << 100 << 70 << 90 << 82;
+        expenseData << 70 << 60 << 75 << 50 << 75 << 85 << 10;
+
+    } else {
+        // Monthly
+        ticks << 1 << 2 << 3 << 4 << 5 << 6;
+        labels << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June";
+        incomeData << 70 << 80 << 75 << 90 << 90 << 90 << 90;
+        expenseData << 60 << 55 << 100 << 90 << 90 << 90 << 90;
+    }
+    customPlot->xAxis->setTickVector(ticks);
+    customPlot->xAxis->setTickVectorLabels(labels);
+    incomeGraph->setData(ticks, incomeData);
+    expenseGraph->setData(ticks, expenseData);
+    customPlot->replot();
+}
+
+void Dashboard::updateFigures(int timeline) {
+    int prev_bal = 1000;
+    int cur_income = 800;
+    int cur_expense = 600;
+    int cur_balance = 200;
+    int total_balance = 1200;
+    QString time_value;
+
+    // TODO: Get the figures from the Database and assign it into above variables
+    if(timeline == 0) {
+        // Daily
+        monthLabel->setText("Day:");
+        time_value = QString::fromStdString("Sat");
+    }
+    else if (timeline == 1) {
+        // Monthly
+        monthLabel->setText("Month:");
+        time_value = QString::fromStdString("Sep");
+    }
+    else {
+        // Yearly
+        monthLabel->setText("Year:");
+        time_value = QString::fromStdString("1992");
+    }
+    monthValueLabel->setText(time_value);
+    previousBalanceValueLabel->setText(CURRENCY +QString::number(prev_bal));
+    currentIncomeValueLabel->setText(CURRENCY +QString::number(cur_income));
+    currentExpenseValueLabel->setText(CURRENCY +QString::number(cur_expense));
+    currentMonthBalanceValueLabel->setText(CURRENCY +QString::number(cur_balance));
+    totalBalanceValueLabel->setText(CURRENCY +QString::number(total_balance));
 }
 
 Dashboard::~Dashboard()
 {
+#if 0
+    // Delete the dynamically assigned variables
+    delete userNameLabel;
 
+    delete userNameBox;
+    delete timelineLabel;
+    delete timelineCombo;
+#if 0
+
+    delete userNameLayout;
+#endif
+#if 1
+    delete timelineBox;
+    //delete timelineLayout;
+    delete addIncomeButton;
+    delete addExpenseButton;
+#endif
+#if 1
+    delete viewTransactionButton;
+    delete buttonsBox;
+    //delete buttonsLayout;
+    //delete groupTimelineButtonsLayout;
+    delete monthLabel;
+    delete monthValueLabel;
+    delete previousBalanceLabel;
+    delete previousBalanceValueLabel;
+#endif
+#if 1
+    delete currentIncomeLabel;
+    delete currentIncomeValueLabel;
+    delete currentExpenseLabel;
+    delete currentExpenseValueLabel;
+    delete currentMonthBalanceLabel;
+    delete currentMonthBalanceValueLabel;
+    delete totalBalanceLabel;
+    delete totalBalanceValueLabel;
+    delete figureBox;
+    //delete figureLayout;
+    //delete groupFiguresTimelineButtonsLayout;
+    delete graphLabel;
+    delete customPlot;
+    delete graph;
+    delete incomeGraph;
+    delete expenseGraph;
+    delete graphBox;
+    //delete graphLayout;
+    //delete groupGraphFiguresTimelineButtonsLayout;
+    //delete mainLayout;
+#endif
+#endif
 }

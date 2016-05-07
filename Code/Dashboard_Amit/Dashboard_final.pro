@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         dashboard.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
+    addexpense.cpp
 
 HEADERS  += dashboard.h \
-    qcustomplot.h
+    qcustomplot.h \
+    addexpense.h
 
 DISTFILES += \
     qcustomplot.qch
