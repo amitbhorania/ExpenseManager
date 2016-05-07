@@ -17,11 +17,23 @@ class Dashboard : public QWidget
 public:
     Dashboard(QWidget *parent = 0);
     ~Dashboard();
+    void showUserName();
+    void showTimeline();
+    void showButtons();
 
 private:
+    // Variables for User Name Display
     QLabel *userNameLabel;
+    QGroupBox *userNameBox;
+    QHBoxLayout *userNameLayout;
+
+    // Variables for Timeline Display
     QLabel *timelineLabel;
     QComboBox *timelineCombo;
+    QGroupBox *timelineBox;
+    QHBoxLayout *timelineLayout;
+
+
     QLabel *monthLabel;
     QLabel *monthValueLabel;
     QLabel *previousBalanceLabel;
@@ -34,8 +46,18 @@ private:
     QLabel *currentMonthBalanceValueLabel;
     QLabel *totalBalanceLabel;
     QLabel *totalBalanceValueLabel;
-    QCustomPlot *graph;
-    QCPBarsGroup *graphBAR;
+    QCustomPlot *customPlot;
+
+    // Graph
+    QLabel *graphLabel;
+    QCPBarsGroup *graph;
+    QCPBars *incomeGraph;
+    QCPBars *expenseGraph;
+
+    // Buttons
+    QPushButton *addIncomeButton;
+    QPushButton *addExpenseButton;
+    QPushButton *viewTransactionButton;
 
 #if 0
     QString *monthStr;
