@@ -27,10 +27,13 @@
         string line;
         int i=0;
         int type_or_category_or_paymentType;
+        stringstream date_stream;
+        date_stream << data.getMonth() << "\/" << data.getDay() << "\/" << data.getYear();
+        this->date = date_stream.str();
         double amount;
         while (!f.eof()) {
             getline(f,line);
-            if (line == date || i>0){ //need to work on the condition if date will be checked or not
+            if (line == this->date || i>0){ //need to work on the condition if date will be checked or not
                 switch (i){
                     case 1 : {istringstream (line) >> type_or_category_or_paymentType;
                              data.setType((TranType_t)type_or_category_or_paymentType);
@@ -44,7 +47,7 @@
                              data.setCategory ((TranCategory_t) type_or_category_or_paymentType);
                                 break;}
                     case 5 :{istringstream (line) >> type_or_category_or_paymentType;
-                             data.setCategory ((PaymentType_t) type_or_category_or_paymentType);
+                             data.setPaymentType ((PaymentType_t) type_or_category_or_paymentType);
                                 break;}
                     default: 	break;
                 }

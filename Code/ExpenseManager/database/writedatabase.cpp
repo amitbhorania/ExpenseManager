@@ -19,10 +19,10 @@
 
 
     // Store the Transaction Details to DataBase
-    WriteDatabase:: WriteTransaction(Transaction& data){
+    WriteDatabase:: WriteTransaction(Transaction &data){
             ofstream filehandle;
             filehandle.open(this->fileName.c_str(), ios::app);
-            filehandle << data.getMonth() << "\\" << data.getDay() << "\\" <<data.getYear() << "\n";
+            filehandle << data.getMonth() << "\/" << data.getDay() << "\/" <<data.getYear() << "\n";
             filehandle << data.getType() << "\n";
             filehandle << data.getAmount() << "\n";
             filehandle << data.getDescription() << "\n";
@@ -36,9 +36,9 @@
     WriteDatabase::ResetUserData(){
 
         ofstream f;
-        f.open(this->fileName.c_str, ios::ate);
+        f.open(this->fileName.c_str(), ios::ate);
         f << "\n";
-        f.close;
+        f.close();
     }
 
     #if 0

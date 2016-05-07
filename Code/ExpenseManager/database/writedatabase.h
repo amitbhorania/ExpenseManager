@@ -25,17 +25,17 @@ using namespace std;
 // Write content into Database
 class WriteDatabase {
 private:
-string userName;
-string fileName;
+string userName,
+       fileName;
 public:
     //Constructor
     WriteDatabase(string userName = "ExpenseManager");
 
     // Store the Transaction Details to DataBase
-    WriteTransaction(Transaction_t tran);
+    WriteTransaction(Transaction& tran);
 
     //Reset the data
-    ResetUserData(string userName );
+    ResetUserData();
 
 
 #if 0

@@ -23,30 +23,32 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-using namesapce std;
+using namespace std;
 
 //Load Data required to plot graphs from Database and pass it to backend in a vector
-class GraphData
-{
+class GraphData{
 private:
-    string userName, fileName;
+    string userName,
+           fileName,
+           date;
 public:
     //Create file Name corresponding to user by taking user Name
-    GraphData(string userName = "ExpenseManager"): userName(userName);
+    GraphData(string userName = "ExpenseManager");
 
     //Sum of trasactions today or the date provided
-    figures_of_a_day(string userName, double& expense, double& income, Date date);
+    figures_of_a_day(double& expense, double& income, Date date);
 
     //Load last 6 days' expense & income into respective vector
-    LastSixDays(string userName, vector<double>& sixDays_Expense, vector<double>& sixDays_Income, Date date);
+    LastSixDays(vector<double>& sixDays_Expense,
+                vector<double>& sixDays_Income, Date date);
 
     //Load last 6 months' expens & income into respective vector
-    LastSixMonths(string userName, vector<double>& sixMonths_Expense,
-                              vector<double>& sixMonths_Income, Date date);
+    LastSixMonths(vector<double>& sixMonths_Expense,
+                  vector<double>& sixMonths_Income, Date date);
 
     //Load last 6 years' expense & income into respective vector
-    GraphData:: LastSixYears(string userName, vector<double>& sixYears_Expense,
-                             vector<double>& sixYears_Income, Date date);
+    LastSixYears(vector<double>& sixYears_Expense,
+                 vector<double>& sixYears_Income, Date date);
 };
 
 #endif // GRAPHDATA_H

@@ -26,11 +26,17 @@ using namespace std;
 // Read all content from Database
 class ReadDatabase {
 private:
-    String fileName;
-    string userName;
+    string fileName,
+           userName,
+           date;
 public:
     //Create file Name corresponding to user or a default file
     ReadDatabase(string userName = "ExpenseManager");
+
+    // Load the Transaction details from Database
+    ReadTransaction(Transaction& data);
+
+#if 0
 
     // Check if user name is available
     ChkUserName(string userName,
@@ -50,9 +56,7 @@ public:
     //Load Security Answer
     ReadSecurityAnswer(string username,
                        string& securityAnswer);
-
-    // Load the Transaction details from Database
-    ReadTransaction(Transaction_t& t);
+#endif
 
 };
 
