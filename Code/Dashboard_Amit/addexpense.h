@@ -20,33 +20,31 @@ public:
     ~AddExpense();
 
 private:
-    QComboBox *categoryBox;
-    QComboBox *DateBox;
-    QComboBox *DateDayBox;
-    QComboBox *DateYearBox;
-
+    // Variables to get Date of Transaction
     QLabel* userDate;
-    QLabel* todaysDate;
-    QLineEdit* userLineDate;
+    QComboBox *dateMonthBox;
+    QComboBox *dateDayBox;
+    QComboBox *dateYearBox;
 
-    QLabel* userCategory;
-    QLineEdit* userLineCat;
+    // Variables to get Transaction Description
+    QLabel* description;
+    QLineEdit* descriptionValue;
 
-    QLabel* userPrice;
-    QLineEdit* userLinePrice;
+    // Variables to get Transaction Category
+    QLabel* category;
+    QComboBox *categoryBox;
 
-    QComboBox *PaymentBox;
+    // Variables to get Amount
+    QLabel* amount;
+    QLineEdit* amountValue;
 
-    QLabel* userPayment;
-    QLineEdit* userLinePayment;
+    // Variables to get Payment Type
+    QLabel* paymentType;
+    QComboBox *paymentBox;
 
-    QLabel* userDescription;
-    QLineEdit* userLineDescription;
-
+    // Action Buttons
     QPushButton* addButton;
     QPushButton* cancelButton;
-
-signals:
 
 public slots:
     void OnCancel();

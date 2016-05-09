@@ -11,6 +11,10 @@
 #include "qcustomplot.h"
 #include "addexpense.h"
 #include "addincome.h"
+#include <QDate>
+#include "date.h"
+#include "graphdata.h"
+#include <vector>
 
 class Dashboard : public QWidget
 {
@@ -19,6 +23,7 @@ class Dashboard : public QWidget
 public:
     Dashboard(QWidget *parent = 0);
     ~Dashboard();
+    void getCurrentDate();
     void showUserName();
     void showTimeline();
     void showButtons();
@@ -30,6 +35,7 @@ public:
     void showMainLayout();
     void updateGraph(int timeline);
     void updateFigures(int timeline);
+    int getCurrentTimelineValue();
 private:
     // Variables for User Name Display
     QLabel *userNameLabel;
@@ -88,6 +94,9 @@ private:
 
     // Income and Expense Data to show in Graph
     QVector<double> incomeData, expenseData;
+    vector<double> incomeDataDB, expenseDataDB;
+    double maxY;
+
     QGroupBox *graphBox;
     QVBoxLayout *graphLayout;
 
@@ -102,6 +111,18 @@ private:
 
     // Income Window
     AddIncome incomeWindow;
+
+    // Current Date
+    QDate currentDate;
+    int currentMonth;
+    int currentDay;
+    int currentYear;
+    QString currentDayString;
+    Date date;
+
+    // Graph Data Object to access its methods
+    GraphData graphData;
+
 #if 0
     QString *monthStr;
     QString *prevBalanceStr;

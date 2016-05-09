@@ -1,4 +1,7 @@
 #include "dashboard.h"
+#include "graphdata.h"
+#include <iostream>
+using namespace std;
 
 #define CURRENCY "US$ "
 #define GUI_FONTTYPE  "Helvetica"
@@ -9,6 +12,15 @@
 Dashboard::Dashboard(QWidget *parent)
     : QWidget(parent)
 {
+    // Add 6 Data into Vector
+    for(int i = 0; i < 6; i++) {
+        incomeDataDB.push_back(0);
+        expenseDataDB.push_back(0);
+        incomeData.push_back(0);
+        expenseData.push_back(0);
+    }
+
+    getCurrentDate();
     //setStyleSheet("background: url(E:/Stevens/C++/Projects/Dashboard_final/images/background1.jpg)");
     showUserName();
     showTimeline();
@@ -26,6 +38,18 @@ Dashboard::Dashboard(QWidget *parent)
     connect(timelineCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(getTimeline(int)));
     connect(addExpenseButton, SIGNAL(clicked()), this, SLOT(showExpenseWindow()));
     connect(addIncomeButton, SIGNAL(clicked()), this, SLOT(showIncomeWindow()));
+}
+
+void Dashboard::getCurrentDate() {
+    // Get Current Date
+    currentDate = QDate::currentDate();
+    currentMonth = currentDate.month();
+    currentDay = currentDate.day();
+    currentYear = currentDate.year();
+    currentDayString = currentDate.shortDayName(currentDate.dayOfWeek());
+    date.setDay(currentDay);
+    date.setMonth(currentMonth);
+    date.setYear(currentYear);
 }
 
 // Show User Name in Dashboard
@@ -48,7 +72,11 @@ void Dashboard::showTimeline() {
     timelineCombo->addItem("Daily");
     timelineCombo->addItem("Monthly");
     timelineCombo->addItem("Yearly");
+
+    // Default Time Line set to Monthly
     timelineCombo->setCurrentIndex(1);
+    timelineVal = 1;
+
     timelineBox = new QGroupBox();
     timelineLayout = new QHBoxLayout();
     timelineLayout->addWidget(timelineLabel,0,Qt::AlignLeft);
@@ -96,7 +124,7 @@ void Dashboard::showFigures() {
     currentExpenseLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
     currentExpenseValueLabel = new QLabel("US$ 50.00");
     currentExpenseValueLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
-    currentMonthBalanceLabel = new QLabel("Current Month Balance");
+    currentMonthBalanceLabel = new QLabel("Current Balance");
     currentMonthBalanceLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
     currentMonthBalanceValueLabel = new QLabel("US$ 150.00");
     currentMonthBalanceValueLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
@@ -116,8 +144,8 @@ void Dashboard::showFigures() {
     figureLayout->addWidget(currentExpenseValueLabel, 3, 1);
     figureLayout->addWidget(currentMonthBalanceLabel, 4, 0);
     figureLayout->addWidget(currentMonthBalanceValueLabel, 4, 1);
-    figureLayout->addWidget(totalBalanceLabel, 5, 0);
-    figureLayout->addWidget(totalBalanceValueLabel, 5, 1);
+    //figureLayout->addWidget(totalBalanceLabel, 5, 0);
+    //figureLayout->addWidget(totalBalanceValueLabel, 5, 1);
     figureBox->setLayout(figureLayout);
     //figureBox->setStyleSheet("background: url(E:/Stevens/C++/Projects/Dashboard_final/images/1.jpg)");
 }
@@ -164,27 +192,80 @@ void Dashboard::showGraph() {
     expenseGraph->setBrush(QColor(1, 92, 191, 50));
     expenseGraph->setWidth(0.2);
 
+    // Add Ticks
+    ticks << 1 << 2 << 3 << 4 << 5 << 6;
+
+    for(int k = 0; k < 6; k++) {
+        incomeDataDB[k] = 0;
+        expenseDataDB[k] = 0;
+        incomeData[k] = 0;
+        expenseData[k] = 0;
+    }
+
     // Prepare X Axis
     if(timelineVal == 0) {
         // Daily
-        ticks << 1 << 2 << 3 << 4 << 5 << 6;
-        labels << "Mon" << "Tue" << "Wed" << "Thur" << "Fri" << "Sat";
-        incomeData << 100 << 70 << 65 << 60 << 50 << 55 << 82;
-        expenseData << 60 << 50 << 40 << 30 << 25 << 20 << 90;
+        // Set Ticks Label Value according to cuurent Date
+        int i = currentDate.dayOfWeek();
+        for(int j = 0; j < 6; j++) {
+            labels.insert(0, currentDate.shortDayName(i));
+            i--;
+            if(i == 0)
+                i = 7;
+        }
+        graphData.LastSixDaysNew(expenseDataDB, incomeDataDB, date);
+        maxY = 0;
+        for(int i = 5, j = 0; i >= 0; i--, j++) {
+            incomeData[j] = incomeDataDB[i];
+            expenseData[j] = expenseDataDB[i];
+            if (maxY < incomeDataDB[i])
+                maxY = incomeDataDB[i];
+            if (maxY < expenseDataDB[i])
+                maxY = expenseDataDB[i];
+        }
     }
     else if(timelineVal == 2) {
         // Yearly
-        ticks << 1 << 2 << 3 << 4 << 5 << 6;
-        labels << "2011" << "2012" << "2013" << "2014" << "2015" << "2016";
-        incomeData << 50 << 60 << 80 << 100 << 70 << 90 << 82;
-        expenseData << 70 << 60 << 75 << 50 << 75 << 85 << 10;
-
-    } else {
+        qDebug() << "By Default Graph Years";
+        // Set Ticks Label Value according to cuurent Date
+        int i = currentDate.year();
+        for(int j = 0; j < 6; j++) {
+            labels.insert(0, QString::number(i));
+            i--;
+        }
+        graphData.LastSixYearsNew(expenseDataDB, incomeDataDB, date);
+        maxY = 0;
+        for(int i = 5, j = 0; i >= 0; i--, j++) {
+            incomeData[j] = incomeDataDB[i];
+            expenseData[j] = expenseDataDB[i];
+            if (maxY < incomeDataDB[i])
+                maxY = incomeDataDB[i];
+            if (maxY < expenseDataDB[i])
+                maxY = expenseDataDB[i];
+        }
+    }
+    else {
         // Monthly
-        ticks << 1 << 2 << 3 << 4 << 5 << 6;
-        labels << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June";
-        incomeData << 70 << 80 << 75 << 90 << 90 << 90 << 90;
-        expenseData << 60 << 55 << 100 << 90 << 90 << 90 << 90;
+        // Set Ticks Label Value according to cuurent Date
+        int i = currentDate.month();
+        for(int j = 0; j < 6; j++) {
+            labels.insert(0,currentDate.shortMonthName(i));
+            i--;
+            if(i == 0)
+                i = 12;
+        }
+        qDebug() << "Calling GraphData LastSixMonths Function";
+        graphData.LastSixMonthsNew(expenseDataDB, incomeDataDB, date);
+        qDebug() << "Over GraphData LastSixMonths Function";
+        maxY = 0;
+        for(int i = 5, j = 0; i >= 0; i--, j++) {
+            incomeData[j] = incomeDataDB[i];
+            expenseData[j] = expenseDataDB[i];
+            if (maxY < incomeDataDB[i])
+                maxY = incomeDataDB[i];
+            if (maxY < expenseDataDB[i])
+                maxY = expenseDataDB[i];
+        }
     }
 
     customPlot->xAxis->setAutoTicks(false);
@@ -199,7 +280,7 @@ void Dashboard::showGraph() {
 
     // Prepare Y Axis
     // TODO - Set the range according to Maximum value of the input data from Database
-    customPlot->yAxis->setRange(0, 105);
+    customPlot->yAxis->setRange(0, maxY);
     customPlot->yAxis->setPadding(5); // a bit more space to the left border
     customPlot->yAxis->setLabel("Amount");
     customPlot->yAxis->grid()->setSubGridVisible(true);
@@ -252,67 +333,122 @@ void Dashboard::showMainLayout() {
 void Dashboard::updateGraph(int timeline) {
     ticks.clear();
     labels.clear();
-    incomeData.clear();
-    expenseData.clear();
+    for(int k = 0; k < 6; k++) {
+        incomeData[k] = 0;
+        expenseData[k] = 0;
+        incomeDataDB[k] = 0;
+        expenseDataDB[k] = 0;
+    }
 
+    ticks << 1 << 2 << 3 << 4 << 5 << 6;
     if(timeline == 0) {
         // Daily
-        ticks << 1 << 2 << 3 << 4 << 5 << 6;
-        labels << "Mon" << "Tue" << "Wed" << "Thur" << "Fri" << "Sat";
-        incomeData << 100 << 70 << 65 << 60 << 50 << 55 << 82;
-        expenseData << 60 << 50 << 40 << 30 << 25 << 20 << 90;
+        // Set Ticks Label Value according to cuurent Date
+        int i = currentDate.dayOfWeek();
+        for(int j = 0; j < 6; j++) {
+            labels.insert(0, currentDate.shortDayName(i));
+            i--;
+            if(i == 0)
+                i = 7;
+        }
+        graphData.LastSixDaysNew(expenseDataDB, incomeDataDB, date);
+        maxY = 0;
+        for(int i = 5, j = 0; i >= 0; i--, j++) {
+            incomeData[j] = incomeDataDB[i];
+            expenseData[j] = expenseDataDB[i];
+            if (maxY < incomeDataDB[i])
+                maxY = incomeDataDB[i];
+            if (maxY < expenseDataDB[i])
+                maxY = expenseDataDB[i];
+        }
     }
     else if(timeline == 2) {
+        qDebug() << "Update Graph Years";
         // Yearly
-        ticks << 1 << 2 << 3 << 4 << 5 << 6;
-        labels << "2011" << "2012" << "2013" << "2014" << "2015" << "2016";
-        incomeData << 50 << 60 << 80 << 100 << 70 << 90 << 82;
-        expenseData << 70 << 60 << 75 << 50 << 75 << 85 << 10;
-
+        // Set Ticks Label Value according to cuurent Date
+        int i = currentDate.year();
+        for(int j = 0; j < 6; j++) {
+            labels.insert(0, QString::number(i));
+            i--;
+        }
+        graphData.LastSixYearsNew(expenseDataDB, incomeDataDB, date);
+        maxY = 0;
+        for(int i = 5, j = 0; i >= 0; i--, j++) {
+            incomeData[j] = incomeDataDB[i];
+            expenseData[j] = expenseDataDB[i];
+            if (maxY < incomeDataDB[i])
+                maxY = incomeDataDB[i];
+            if (maxY < expenseDataDB[i])
+                maxY = expenseDataDB[i];
+        }
     } else {
         // Monthly
-        ticks << 1 << 2 << 3 << 4 << 5 << 6;
-        labels << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June";
-        incomeData << 70 << 80 << 75 << 90 << 90 << 90 << 90;
-        expenseData << 60 << 55 << 100 << 90 << 90 << 90 << 90;
+        // Set Ticks Label Value according to cuurent Date
+        int i = currentDate.month();
+        for(int j = 0; j < 6; j++) {
+            labels.insert(0, currentDate.shortMonthName(i));
+            i--;
+            if(i == 0)
+                i = 12;
+        }
+        graphData.LastSixMonthsNew(expenseDataDB, incomeDataDB, date);
+        maxY = 0;
+        for(int i = 5, j = 0; i >= 0; i--, j++) {
+            incomeData[j] = incomeDataDB[i];
+            expenseData[j] = expenseDataDB[i];
+            if (maxY < incomeDataDB[i])
+                maxY = incomeDataDB[i];
+            if (maxY < expenseDataDB[i])
+                maxY = expenseDataDB[i];
+        }
     }
     customPlot->xAxis->setTickVector(ticks);
     customPlot->xAxis->setTickVectorLabels(labels);
+    customPlot->yAxis->setRange(0, maxY);
     incomeGraph->setData(ticks, incomeData);
     expenseGraph->setData(ticks, expenseData);
     customPlot->replot();
 }
 
 void Dashboard::updateFigures(int timeline) {
-    int prev_bal = 1000;
-    int cur_income = 800;
-    int cur_expense = 600;
-    int cur_balance = 200;
-    int total_balance = 1200;
+    double prev_bal;
+    double cur_income;
+    double cur_expense;
+    double cur_balance;
+
+    prev_bal = incomeDataDB[1] - expenseDataDB[1];
+    cur_income = incomeDataDB[0];
+    cur_expense = expenseDataDB[0];
+    cur_balance = cur_income - cur_expense;
+
     QString time_value;
 
     // TODO: Get the figures from the Database and assign it into above variables
     if(timeline == 0) {
         // Daily
         monthLabel->setText("Day:");
-        time_value = QString::fromStdString("Sat");
+        time_value = currentDate.shortDayName(currentDate.dayOfWeek());
     }
     else if (timeline == 1) {
         // Monthly
         monthLabel->setText("Month:");
-        time_value = QString::fromStdString("Sep");
+        time_value = currentDate.shortMonthName(currentDate.month());
     }
     else {
         // Yearly
         monthLabel->setText("Year:");
-        time_value = QString::fromStdString("1992");
+        time_value = QString::number(currentDate.year());
     }
     monthValueLabel->setText(time_value);
     previousBalanceValueLabel->setText(CURRENCY +QString::number(prev_bal));
     currentIncomeValueLabel->setText(CURRENCY +QString::number(cur_income));
     currentExpenseValueLabel->setText(CURRENCY +QString::number(cur_expense));
     currentMonthBalanceValueLabel->setText(CURRENCY +QString::number(cur_balance));
-    totalBalanceValueLabel->setText(CURRENCY +QString::number(total_balance));
+    //totalBalanceValueLabel->setText(CURRENCY +QString::number(total_balance));
+}
+
+int Dashboard::getCurrentTimelineValue() {
+    return timelineVal;
 }
 
 Dashboard::~Dashboard()

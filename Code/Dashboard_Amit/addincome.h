@@ -20,33 +20,32 @@ public:
     ~AddIncome();
 
 private:
-    QComboBox *DateBox;
-    QComboBox *DateDayBox;
-    QComboBox *DateYearBox;
-    QComboBox *categoryBox;
+
+    // Variables to Select the Date of Transaction
     QLabel* userDate;
-    QLabel* todaysDate;
-    QLineEdit* userLineDate;
-    QComboBox *PaymentTypeBox;
+    QComboBox *dateMonthBox;
+    QComboBox *dateDayBox;
+    QComboBox *dateYearBox;
 
-    QLabel* userCategory;
-    QLineEdit* userLineCat;
+    // Variables to Get Description of Transaction
+    QLabel* description;
+    QLineEdit* descriptionValue;
 
-    QLabel* userPaymentType;
-    QLineEdit* userLinePayment;
+    // Variables to Select Transaction Category
+    QLabel* category;
+    QComboBox *categoryBox;
 
-    QLabel* userPrice;
-    QLineEdit* userLinePrice;
+    // To get Transaction Amount
+    QLabel* amount;
+    QLineEdit* amountValue;
 
-    QLabel* userPayment;
+    // Variables for Source of Income
+    QLabel* incomeSource;
+    QComboBox* incomeSourceBox;
 
-    QLabel* userDescription;
-    QLineEdit* userLineDescription;
-
+    // Buttons for Actions
     QPushButton* addButton;
     QPushButton* cancelButton;
-
-signals:
 
 public slots:
     void OnCancel();
