@@ -5,15 +5,14 @@
 * Revision History  :
 *   Date            Author          Change(Describe the changes made)
 *   04.17.2016      Amit Bhorania   Created File and Framework
-*
-*
+*   04.24.2016      Amit Bhorania   Added Methods definitions
 */
 
 #include "transaction.h"
 #include "writedatabase.h"
 #include "readdatabase.h"
 
-// Constructor
+// Constructor to Fill up the Object Details
 Transaction::Transaction(
         TranType_t type,
         double amount,
@@ -28,7 +27,7 @@ Transaction::Transaction(
 
 }
 
-// Method to Get the Transaction details given by User
+// Read the Transaction from the Database
 void Transaction::getTransactionDetails()
 {
     // Create Database Object and Call the method to read Transaction
@@ -44,8 +43,7 @@ void Transaction::sendTransactionToDatabase()
     WDB.WriteTransaction(*this);
 }
 
-// Get/Set Methods
-
+// Get Methods
 TranType_t Transaction::getType()
 {
     return this->type;
@@ -71,6 +69,7 @@ PaymentType_t Transaction::getPaymentType()
     return this->paymentType;
 }
 
+// Set Methods
 void Transaction::setType(TranType_t t)
 {
     this->type = t;

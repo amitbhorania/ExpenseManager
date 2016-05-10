@@ -5,8 +5,7 @@
 * Revision History  :
 *   Date            Author          Change(Describe the changes made)
 *   04.17.2016      Amit Bhorania   Created File and added Enum definitions
-*
-*
+*   05.06.2016      Amit Bhorania   Updated Enums according to New Transaction Category and Payment Type
 */
 
 #ifndef ENUMS_H
@@ -18,7 +17,7 @@ enum TranType_t {
     EXPENSE
 };
 
-// Transaction Category
+// Transaction Category represents where user has used his money or received money from
 enum TranCategory_t {
     TRAVELLING = 0,
     FOOD,
@@ -35,7 +34,7 @@ enum TranCategory_t {
     MAX_INCOMECATEGORY = OTHER2,
 };
 
-// Type of Payment
+// Type of Payment by which means user has paid the amount or received amount
 enum PaymentType_t {
     CASH = 0,
     CHEQUE,

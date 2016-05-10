@@ -4,10 +4,7 @@
 *
 * Revision History  :
 *   Date            Author              Change(Describe the changes made)
-*   05.07.2016      Ankit Luv Mittal    Added date as private member of class and
-*					extrated date from the transaction object
-*
-*
+*   05.07.2016      Ankit Luv Mittal    Added private members and methods of Class
 */
 
 #ifndef READDATABASE_H
@@ -37,6 +34,7 @@ public:
     // Load the Transaction details from Database
     void ReadTransaction(Transaction& data);
 
+// Methods for Future Implementation
 #if 0
 
     // Check if user name is available

@@ -35,4 +35,5 @@ HEADERS  += dashboard.h \
     writedatabase.h
 
 DISTFILES += \
-    qcustomplot.qch
+    qcustomplot.qch \
+    Dashboard_UML.qmodel

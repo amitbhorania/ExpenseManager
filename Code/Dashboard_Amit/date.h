@@ -5,8 +5,6 @@
 * Revision History  :
 *   Date            Author          Change(Describe the changes made)
 *   04.17.2016      Amit Bhorania   Created File and added members and methods
-*
-*
 */
 
 #ifndef DATE_H
@@ -33,9 +31,6 @@ public:
     void setMonth(int month);
     void setDay(int day);
     void setYear(int year);
-
-    // Get a Date as String
-    //string getDateString();
 };
 
 #endif // DATE_H

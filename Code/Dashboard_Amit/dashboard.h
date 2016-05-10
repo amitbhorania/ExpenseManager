@@ -1,3 +1,18 @@
+/*\file	dashboard.h
+*
+* \brief	Dashboard Header file to Display Dashboard & Graph GUI
+*
+* Revision History  :
+*   Date            Author                  Change(Describe the changes made)
+*   05.04.2016      Amit Bhorania           Created File and added Class defines
+*   05.05.2016      Amit Bhorania           Added Members & Methods for Dashboard and GUI
+*   05.05.2016      Vrushali Gaikwad        Added Members & Methods for Graph
+*   05.07.2016      Amit & Vrushali         Integrated Graph into Dashboard
+*   05.07.2016      Amit & Vrushali         Integrated Add Income & Add Expense into Dashboard
+*   05.07.2016      Amit & Vrushali & Ankit Integrated Backend and Database with GUI
+*   05.08.2016      Amit Bhorania           Code Clean Up
+*/
+
 #ifndef DASHBOARD_H
 #define DASHBOARD_H
 
@@ -16,26 +31,55 @@
 #include "graphdata.h"
 #include <vector>
 
+// Dashboard Class to display Username, Figures, Graph etc
 class Dashboard : public QWidget
 {
     Q_OBJECT
 
 public:
     Dashboard(QWidget *parent = 0);
+
     ~Dashboard();
+
+    // Get Current Date to use it in other code
     void getCurrentDate();
+
+    // Show User Name in Dashboard
     void showUserName();
+
+    // Show Timeline in Dashboard
     void showTimeline();
+
+    // Show Buttons in Dashboard
     void showButtons();
+
+    // Combine TimeLine & Buttons Layout in Dashboard
     void combineTimelineButtons();
+
+    // Display Income & Expense Figures in the Dashboard
     void showFigures();
+
+    // Combine Figures & Timeline-Buttons
     void combineFiguresTimelineButtons();
+
+    // Plot Graph in the Dashboard
     void showGraph();
+
+    // Combine Figure-Button-Timeline and Graph Layout
     void combineGraphFiguresTimelineButtons();
+
+    // Add all the created layouts in the main layout
     void showMainLayout();
+
+    // Update the Graphs on change in the Transaction file
     void updateGraph(int timeline);
+
+    // Update the Figures on change in the Transaction file
     void updateFigures(int timeline);
+
+    // Return Current Timeline Selected
     int getCurrentTimelineValue();
+
 private:
     // Variables for User Name Display
     QLabel *userNameLabel;
@@ -114,23 +158,10 @@ private:
 
     // Current Date
     QDate currentDate;
-    int currentMonth;
-    int currentDay;
-    int currentYear;
-    QString currentDayString;
     Date date;
 
     // Graph Data Object to access its methods
     GraphData graphData;
-
-#if 0
-    QString *monthStr;
-    QString *prevBalanceStr;
-    QString *currentIncomeStr;
-    QString *currentExpenseStr;
-    QString *currentMonthBalanceStr;
-    QString *totalBalanceStr;
-#endif
 
 public slots:
     void getTimeline(int index) {
@@ -138,18 +169,20 @@ public slots:
         updateGraph(timelineVal);
         updateFigures(timelineVal);
     };
+
     void showExpenseWindow() {
-        //QWidget *window = new QWidget();
-        //expenseWindow = new AddExpense();
-        //expenseWindow->show();
         expenseWindow.show();
     };
+
     void showIncomeWindow() {
-        //QWidget *window = new QWidget();
-        //expenseWindow = new AddExpense();
-        //expenseWindow->show();
         incomeWindow.show();
     };
+
+    void redrawGraph() {
+        updateGraph(timelineVal);
+        updateFigures(timelineVal);
+    };
+
 };
 
 #endif // DASHBOARD_H

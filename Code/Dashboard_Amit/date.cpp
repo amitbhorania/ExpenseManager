@@ -5,8 +5,6 @@
 * Revision History  :
 *   Date            Author          Change(Describe the changes made)
 *   04.17.2016      Amit Bhorania   Created File and Framework
-*
-*
 */
 
 #include "date.h"
@@ -48,11 +46,3 @@ void Date::setYear(int year)
 {
     this->year = year;
 }
-
-#if 0
-// Get a Date String to print
-string Date::getDateString()
-{
-
-}
-#endif

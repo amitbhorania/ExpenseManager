@@ -1,3 +1,19 @@
+/*\file	dashboard.cpp
+*
+* \brief	Dashboard Source file to Display Dashboard & Graph GUI
+*
+* Revision History  :
+*   Date            Author                  Change(Describe the changes made)
+*   05.04.2016      Amit Bhorania           Created File and added basic Class defines
+*   05.05.2016      Amit Bhorania           Added Code to Display Dashboard GUI
+*   05.05.2016      Vrushali Gaikwad        Added Code to Display Graph
+*   05.06.2016      Amit Bhorania           Modularized Code into different Methods
+*   05.07.2016      Amit & Vrushali         Integrated Graph into Dashboard
+*   05.07.2016      Amit & Vrushali         Integrated Add Income & Add Expense into Dashboard
+*   05.07.2016      Amit & Vrushali & Ankit Integrated Backend and Database with GUI
+*   05.08.2016      Amit Bhorania           Code Clean Up
+*/
+
 #include "dashboard.h"
 #include "graphdata.h"
 #include <iostream>
@@ -20,41 +36,56 @@ Dashboard::Dashboard(QWidget *parent)
         expenseData.push_back(0);
     }
 
+    // Get Current Date
     getCurrentDate();
-    //setStyleSheet("background: url(E:/Stevens/C++/Projects/Dashboard_final/images/background1.jpg)");
+
+    // Display User Name
     showUserName();
+
+    // Display Timeline Selection Combo Box
     showTimeline();
+
+    // Display Buttons
     showButtons();
+
+    // Combine Layouts
     combineTimelineButtons();
+
+    // Display Figures
     showFigures();
+
+    // Combine Layouts
     combineFiguresTimelineButtons();
+
+    // Display Graph
     showGraph();
+
+    // Combine Layouts
     combineGraphFiguresTimelineButtons();
+
+    // Display Main Layout containing all the child Layouts
     showMainLayout();
 
-    //setStyleSheet("background: url(E:/Stevens/C++/Projects/Dashboard_final/images/background_home.jpg)");
-    //qApp->setStyleSheet("QWidget {background-image: url(./background_home.jpg) }");
-    //setStyleSheet("background: url(E:/Stevens/C++/Projects/Dashboard_final/images/background1.jpg)");
+    // Connect Signals with its appropriate Actions for GUI
     connect(timelineCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(getTimeline(int)));
     connect(addExpenseButton, SIGNAL(clicked()), this, SLOT(showExpenseWindow()));
     connect(addIncomeButton, SIGNAL(clicked()), this, SLOT(showIncomeWindow()));
 }
 
+// Get Current Date to use it in other code
 void Dashboard::getCurrentDate() {
     // Get Current Date
     currentDate = QDate::currentDate();
-    currentMonth = currentDate.month();
-    currentDay = currentDate.day();
-    currentYear = currentDate.year();
-    currentDayString = currentDate.shortDayName(currentDate.dayOfWeek());
-    date.setDay(currentDay);
-    date.setMonth(currentMonth);
-    date.setYear(currentYear);
+
+    // Set Current Date into Date Class
+    date.setDay(currentDate.day());
+    date.setMonth(currentDate.month());
+    date.setYear(currentDate.year());
 }
 
 // Show User Name in Dashboard
 void Dashboard::showUserName() {
-    userNameLabel = new QLabel("Amit Bhorania");
+    userNameLabel = new QLabel("Dov Kruger");
     userNameLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
     //userNameLabel->setStyleSheet("QLabel { background-color : rgb(0, 128, 128); color : white; }");
     userNameLabel->setStyleSheet("QLabel { color : rgb(0, 128, 128); }");
@@ -87,29 +118,30 @@ void Dashboard::showTimeline() {
 // Show Buttons in Dashboard
 void Dashboard::showButtons() {
     addIncomeButton = new QPushButton("Income");
+    //addIncomeButton->setFont(QFont("Cambria", 13, QFont::Normal));
     addExpenseButton = new QPushButton("Expense");
+    //addExpenseButton->setFont(QFont("Cambria", 13, QFont::Normal));
     viewTransactionButton = new QPushButton("View Transaction");
+    //viewTransactionButton->setFont(QFont("Cambria", 13, QFont::Normal));
     buttonsBox = new QGroupBox();
     buttonsLayout = new QGridLayout();
     buttonsLayout->addWidget(addIncomeButton,0,0);
     buttonsLayout->addWidget(addExpenseButton,0,1);
-    buttonsLayout->addWidget(viewTransactionButton,1,0,1,2);
+    //buttonsLayout->addWidget(viewTransactionButton,1,0,1,2);
     buttonsBox->setLayout(buttonsLayout);
 }
 
-// Combine TimeLine & Buttons in Dashboard
+// Combine TimeLine & Buttons Layout in Dashboard
 void Dashboard::combineTimelineButtons() {
     groupTimelineButtonsLayout = new QVBoxLayout();
     groupTimelineButtonsLayout->addWidget(timelineBox, 0);
     groupTimelineButtonsLayout->addWidget(buttonsBox, 0);
 }
 
+// Display Income & Expense Figures in the Dashboard
 void Dashboard::showFigures() {
     monthLabel = new QLabel("Month:");
     monthLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
-    //monthStr = new QString();
-    //monthStr->setRawData("May");
-    //*monthStr = QString::fromStdString("May");
     monthValueLabel = new QLabel("May");
     monthValueLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
     previousBalanceLabel = new QLabel("Previous Balance");
@@ -132,6 +164,8 @@ void Dashboard::showFigures() {
     totalBalanceLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
     totalBalanceValueLabel = new QLabel("US$ 337.00");
     totalBalanceValueLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
+
+    // Add widgets in Layout
     figureBox = new QGroupBox();
     figureLayout = new QGridLayout();
     figureLayout->addWidget(monthLabel, 0, 0);
@@ -144,23 +178,20 @@ void Dashboard::showFigures() {
     figureLayout->addWidget(currentExpenseValueLabel, 3, 1);
     figureLayout->addWidget(currentMonthBalanceLabel, 4, 0);
     figureLayout->addWidget(currentMonthBalanceValueLabel, 4, 1);
-    //figureLayout->addWidget(totalBalanceLabel, 5, 0);
-    //figureLayout->addWidget(totalBalanceValueLabel, 5, 1);
     figureBox->setLayout(figureLayout);
-    //figureBox->setStyleSheet("background: url(E:/Stevens/C++/Projects/Dashboard_final/images/1.jpg)");
 }
 
-// Combine Figures & Timeline-Buttons
+// Combine Figures & Timeline-Buttons Layout
 void Dashboard::combineFiguresTimelineButtons() {
     groupFiguresTimelineButtonsLayout = new QHBoxLayout();
     groupFiguresTimelineButtonsLayout->addWidget(figureBox, 0);
     groupFiguresTimelineButtonsLayout->addLayout(groupTimelineButtonsLayout, 0);
 }
 
+// Plot Graph in the Dashboard
 void Dashboard::showGraph() {
     graphLabel = new QLabel("Graph");
     graphLabel->setFont(QFont(GUI_FONTTYPE, GUI_FONTSIZE, QFont::Normal));
-    //graphLabel->setStyleSheet("QLabel { background-color : rgb(0, 128, 128); color : white; }");
     graphLabel->setStyleSheet("QLabel { color : rgb(0, 128, 128); }");
 
     customPlot = new QCustomPlot();
@@ -195,6 +226,7 @@ void Dashboard::showGraph() {
     // Add Ticks
     ticks << 1 << 2 << 3 << 4 << 5 << 6;
 
+    // Clear the Data
     for(int k = 0; k < 6; k++) {
         incomeDataDB[k] = 0;
         expenseDataDB[k] = 0;
@@ -213,7 +245,11 @@ void Dashboard::showGraph() {
             if(i == 0)
                 i = 7;
         }
-        graphData.LastSixDaysNew(expenseDataDB, incomeDataDB, date);
+
+        // Get Last Six days Income & Expense Data from Database
+        graphData.LastSixDays(expenseDataDB, incomeDataDB, date);
+
+        // Find Out the Max value and store the Vector data into QVector data in reverse order
         maxY = 0;
         for(int i = 5, j = 0; i >= 0; i--, j++) {
             incomeData[j] = incomeDataDB[i];
@@ -233,7 +269,11 @@ void Dashboard::showGraph() {
             labels.insert(0, QString::number(i));
             i--;
         }
-        graphData.LastSixYearsNew(expenseDataDB, incomeDataDB, date);
+
+        // Get Last Six Year Income & Expense Data from Database
+        graphData.LastSixYears(expenseDataDB, incomeDataDB, date);
+
+        // Find Out the Max value and store the Vector data into QVector data in reverse order
         maxY = 0;
         for(int i = 5, j = 0; i >= 0; i--, j++) {
             incomeData[j] = incomeDataDB[i];
@@ -254,9 +294,11 @@ void Dashboard::showGraph() {
             if(i == 0)
                 i = 12;
         }
-        qDebug() << "Calling GraphData LastSixMonths Function";
-        graphData.LastSixMonthsNew(expenseDataDB, incomeDataDB, date);
-        qDebug() << "Over GraphData LastSixMonths Function";
+
+        // Get Last Six Months Income & Expense Data from Database
+        graphData.LastSixMonths(expenseDataDB, incomeDataDB, date);
+
+        // Find Out the Max value and store the Vector data into QVector data in reverse order
         maxY = 0;
         for(int i = 5, j = 0; i >= 0; i--, j++) {
             incomeData[j] = incomeDataDB[i];
@@ -279,7 +321,6 @@ void Dashboard::showGraph() {
     customPlot->xAxis->setRange(0, 7);
 
     // Prepare Y Axis
-    // TODO - Set the range according to Maximum value of the input data from Database
     customPlot->yAxis->setRange(0, maxY);
     customPlot->yAxis->setPadding(5); // a bit more space to the left border
     customPlot->yAxis->setLabel("Amount");
@@ -291,6 +332,7 @@ void Dashboard::showGraph() {
     gridPen.setStyle(Qt::DotLine);
     customPlot->yAxis->grid()->setSubGridPen(gridPen);
 
+    // Load Data into Graph
     incomeGraph->setData(ticks, incomeData);
     expenseGraph->setData(ticks, expenseData);
 
@@ -330,9 +372,12 @@ void Dashboard::showMainLayout() {
     setFixedSize(500,500);
 }
 
+// Update the Graphs on change in the Transaction file
 void Dashboard::updateGraph(int timeline) {
     ticks.clear();
     labels.clear();
+
+    //clear the data
     for(int k = 0; k < 6; k++) {
         incomeData[k] = 0;
         expenseData[k] = 0;
@@ -351,7 +396,11 @@ void Dashboard::updateGraph(int timeline) {
             if(i == 0)
                 i = 7;
         }
-        graphData.LastSixDaysNew(expenseDataDB, incomeDataDB, date);
+
+        // Get Last Six days Income & Expense Data from Database
+        graphData.LastSixDays(expenseDataDB, incomeDataDB, date);
+
+        // Find Out the Max value and store the Vector data into QVector data in reverse order
         maxY = 0;
         for(int i = 5, j = 0; i >= 0; i--, j++) {
             incomeData[j] = incomeDataDB[i];
@@ -371,7 +420,11 @@ void Dashboard::updateGraph(int timeline) {
             labels.insert(0, QString::number(i));
             i--;
         }
-        graphData.LastSixYearsNew(expenseDataDB, incomeDataDB, date);
+
+        // Get Last Six Years Income & Expense Data from Database
+        graphData.LastSixYears(expenseDataDB, incomeDataDB, date);
+
+        // Find Out the Max value and store the Vector data into QVector data in reverse order
         maxY = 0;
         for(int i = 5, j = 0; i >= 0; i--, j++) {
             incomeData[j] = incomeDataDB[i];
@@ -391,7 +444,11 @@ void Dashboard::updateGraph(int timeline) {
             if(i == 0)
                 i = 12;
         }
-        graphData.LastSixMonthsNew(expenseDataDB, incomeDataDB, date);
+
+        // Get Last Six Months Income & Expense Data from Database
+        graphData.LastSixMonths(expenseDataDB, incomeDataDB, date);
+
+        // Find Out the Max value and store the Vector data into QVector data in reverse order
         maxY = 0;
         for(int i = 5, j = 0; i >= 0; i--, j++) {
             incomeData[j] = incomeDataDB[i];
@@ -402,6 +459,7 @@ void Dashboard::updateGraph(int timeline) {
                 maxY = expenseDataDB[i];
         }
     }
+
     customPlot->xAxis->setTickVector(ticks);
     customPlot->xAxis->setTickVectorLabels(labels);
     customPlot->yAxis->setRange(0, maxY);
@@ -410,12 +468,14 @@ void Dashboard::updateGraph(int timeline) {
     customPlot->replot();
 }
 
+// Method to Update the Figures in the Dashboard
 void Dashboard::updateFigures(int timeline) {
     double prev_bal;
     double cur_income;
     double cur_expense;
     double cur_balance;
 
+    // Calculate Figures from Database Vectors
     prev_bal = incomeDataDB[1] - expenseDataDB[1];
     cur_income = incomeDataDB[0];
     cur_expense = expenseDataDB[0];
@@ -423,7 +483,6 @@ void Dashboard::updateFigures(int timeline) {
 
     QString time_value;
 
-    // TODO: Get the figures from the Database and assign it into above variables
     if(timeline == 0) {
         // Daily
         monthLabel->setText("Day:");
@@ -439,48 +498,41 @@ void Dashboard::updateFigures(int timeline) {
         monthLabel->setText("Year:");
         time_value = QString::number(currentDate.year());
     }
+
+    // Update figures in the Dashboard
     monthValueLabel->setText(time_value);
     previousBalanceValueLabel->setText(CURRENCY +QString::number(prev_bal));
     currentIncomeValueLabel->setText(CURRENCY +QString::number(cur_income));
     currentExpenseValueLabel->setText(CURRENCY +QString::number(cur_expense));
     currentMonthBalanceValueLabel->setText(CURRENCY +QString::number(cur_balance));
-    //totalBalanceValueLabel->setText(CURRENCY +QString::number(total_balance));
 }
 
+// Return Current Timeline Selected
 int Dashboard::getCurrentTimelineValue() {
     return timelineVal;
 }
 
+// Destructor to delete all the dynamically assigned memories for Dashboard
 Dashboard::~Dashboard()
 {
-#if 0
     // Delete the dynamically assigned variables
     delete userNameLabel;
-
     delete userNameBox;
     delete timelineLabel;
     delete timelineCombo;
-#if 0
-
     delete userNameLayout;
-#endif
-#if 1
     delete timelineBox;
-    //delete timelineLayout;
+    delete timelineLayout;
     delete addIncomeButton;
     delete addExpenseButton;
-#endif
-#if 1
     delete viewTransactionButton;
     delete buttonsBox;
-    //delete buttonsLayout;
-    //delete groupTimelineButtonsLayout;
+    delete buttonsLayout;
+    delete groupTimelineButtonsLayout;
     delete monthLabel;
     delete monthValueLabel;
     delete previousBalanceLabel;
     delete previousBalanceValueLabel;
-#endif
-#if 1
     delete currentIncomeLabel;
     delete currentIncomeValueLabel;
     delete currentExpenseLabel;
@@ -490,17 +542,15 @@ Dashboard::~Dashboard()
     delete totalBalanceLabel;
     delete totalBalanceValueLabel;
     delete figureBox;
-    //delete figureLayout;
-    //delete groupFiguresTimelineButtonsLayout;
+    delete figureLayout;
+    delete groupFiguresTimelineButtonsLayout;
     delete graphLabel;
     delete customPlot;
     delete graph;
     delete incomeGraph;
     delete expenseGraph;
     delete graphBox;
-    //delete graphLayout;
-    //delete groupGraphFiguresTimelineButtonsLayout;
-    //delete mainLayout;
-#endif
-#endif
+    delete graphLayout;
+    delete groupGraphFiguresTimelineButtonsLayout;
+    delete mainLayout;
 }

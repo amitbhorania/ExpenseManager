@@ -5,8 +5,7 @@
 * Revision History  :
 *   Date            Author          Change(Describe the changes made)
 *   04.17.2016      Amit Bhorania   Created File and added class definition
-*   04.23.2016      Amit Bhorania
-*
+*   04.23.2016      Amit Bhorania   Updated Members and Functions
 */
 
 #ifndef TRANSACTION_H
@@ -18,7 +17,7 @@
 
 using namespace std;
 
-// Transaction Entry
+// Class to store Transaction details with date, description, category etc.
 class Transaction: public Date
 {
 private:
@@ -28,7 +27,7 @@ private:
     TranCategory_t category;
     PaymentType_t paymentType;
 public:
-    // Constructor
+    // Fill up the Transaction informations
     Transaction(
             TranType_t type = EXPENSE,
             double amount = 0,
@@ -40,19 +39,20 @@ public:
             int year = 2016
             );
 
-    // Method to Get the Transaction details given by User
+    // Method to read Transaction from Database
     void getTransactionDetails();
 
     // Send the Transaction Details to DataBase to make an entry
     void sendTransactionToDatabase();
 
-    // Get/Set Methods
+    // Get Methods
     TranType_t getType();
     double getAmount();
     string getDescription();
     TranCategory_t getCategory();
     PaymentType_t getPaymentType();
 
+    // Set Methods
     void setType(TranType_t t);
     void setAmount(double amount);
     void setDescription(string s);

@@ -1,7 +1,22 @@
+/*\file	addincome.cpp
+*
+* \brief	Add Income Source file to Display Add Income Window
+*
+* Revision History  :
+*   Date            Author                  Change(Describe the changes made)
+*   05.01.2016      Vrushali Gaikwad        Created File and added basic Class defines
+*   05.03.2016      Vrushali Gaikwad        Added Code to show GUI of Income Window
+*   05.06.2016      Vrushali Gaikwad        Added Code to connect Buttons with actions
+*   05.06.2016      Amit & Vrushali         Changes According to Integration of GUI, Backend and Database
+*   05.08.2016      Amit Bhorania           Code Clean Up
+*/
+
 #include "addincome.h"
 #include "transaction.h"
 #include "enums.h"
+#include "dashboard.h"
 
+// Add Combo Boxes and LineEdits to Display Add Income Window to User
 AddIncome::AddIncome(QWidget *parent) : QWidget(parent)
 {
     // Set Window Appearance
@@ -75,7 +90,7 @@ AddIncome::AddIncome(QWidget *parent) : QWidget(parent)
     description = new QLabel("Description:");
     descriptionValue = new QLineEdit();
 
-    // Transaction Category
+    // Transaction Category Display
     category = new QLabel("Category:");
 
     categoryBox = new QComboBox();
@@ -146,11 +161,14 @@ AddIncome::AddIncome(QWidget *parent) : QWidget(parent)
     connect(cancelButton, SIGNAL(clicked()), this, SLOT(OnCancel()));
 }
 
+// Action Function for Calcel Button
 void AddIncome::OnCancel()
 {
+    // Close Window
     this->close();
 }
 
+// Action Function for Add Button
 void AddIncome::OnAdd()
 {
     int monthChoice = dateMonthBox->currentIndex() + 1;
@@ -165,9 +183,22 @@ void AddIncome::OnAdd()
     if(incomeSourceChoice == 3)
         incomeSourceChoice = 5;
 
+    // Check whether fields are empty or not
+    if(des.isEmpty()) {
+        QMessageBox::warning(this, tr("Error"), tr("Please Enter Description"));
+        return;
+    }
+
+    if(price.isEmpty()) {
+        QMessageBox::warning(this, tr("Error"), tr("Please Enter Amount"));
+        return;
+    }
+
+    // Write Transaction to Database with all the entered information
     Transaction entry(INCOME,price.toDouble(),des.toStdString(),(TranCategory_t)catChoice, (PaymentType_t)incomeSourceChoice, monthChoice, dayChoice, yearChoice);
     entry.sendTransactionToDatabase();
 
+    // Close Window
     this->close();
 
     // Set Default
@@ -178,10 +209,6 @@ void AddIncome::OnAdd()
     categoryBox->setCurrentIndex(0);
     amountValue->clear();
     incomeSourceBox->setCurrentIndex(0);
-
-    // TODO: Check the Amount Value and It must be numbers
-
-//    getTimeline(Dashboard::getCurrentTimelineValue());
 }
 
 AddIncome::~AddIncome() {}

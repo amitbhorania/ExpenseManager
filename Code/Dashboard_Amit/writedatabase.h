@@ -4,10 +4,9 @@
 *
 * Revision History  :
 *   Date            Author              Change(Describe the changes made)
-*   05.07.2016      Ankit Luv Mittal    Added date as private member of class and
-*					extrated date from the transaction object
-*
+*   05.07.2016      Ankit Luv Mittal    Added private members and Methods to Class
 */
+
 #ifndef WRITEDATABASE_H
 #define WRITEDATABASE_H
 
@@ -25,18 +24,20 @@ using namespace std;
 // Write content into Database
 class WriteDatabase {
 private:
-string userName,
-       fileName;
+    string userName;
+    string fileName;
+
 public:
-    //Constructor
+    // Constructor
     WriteDatabase(string userName = "ExpenseManager");
 
     // Store the Transaction Details to DataBase
     void WriteTransaction(Transaction& tran);
 
-    //Reset the data
+    // Reset the data
     void ResetUserData();
 
+    // Methods for Future Implementation
 #if 0
     // Store the Transaction Details to DataBase
     WriteNewPassword(string userName,
@@ -44,12 +45,12 @@ public:
                      Date date);
     //Store User Info
     WriteUserInfo(string firstName,
-    string lastName,
-    string userName,
-    string password,
-    string securityAns,
-    Date date,
-    bool acknowledgement);
+                  string lastName,
+                  string userName,
+                  string password,
+                  string securityAns,
+                  Date date,
+                  bool acknowledgement);
 
 #endif
 

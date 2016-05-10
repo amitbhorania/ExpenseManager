@@ -1,7 +1,21 @@
+/*\file	addexpense.cpp
+*
+* \brief	Add Expense Source file to Display Add Expense Window
+*
+* Revision History  :
+*   Date            Author                  Change(Describe the changes made)
+*   05.01.2016      Vrushali Gaikwad        Created File and added basic Class defines
+*   05.03.2016      Vrushali Gaikwad        Added Code to show GUI of Expense Window
+*   05.06.2016      Vrushali Gaikwad        Added Code to connect Buttons with actions
+*   05.06.2016      Amit & Vrushali         Changes According to Integration of GUI, Backend and Database
+*   05.08.2016      Amit Bhorania           Code Clean Up
+*/
+
 #include "addexpense.h"
 #include "transaction.h"
 #include "enums.h"
 
+// Add Combo Boxes and LineEdits to Display Add Expense Window to User
 AddExpense::AddExpense(QWidget *parent) : QWidget(parent)
 {
     setFixedSize(300, 200);
@@ -146,11 +160,14 @@ AddExpense::AddExpense(QWidget *parent) : QWidget(parent)
     connect(cancelButton, SIGNAL(clicked()), this, SLOT(OnCancel()));
 }
 
+// Action Function for Calcel Button
 void AddExpense::OnCancel()
 {
+    // Close Window
     this->close();
 }
 
+// Action Function for Add Button
 void AddExpense::OnAdd()
 {
     int monthChoice = dateMonthBox->currentIndex() + 1;
@@ -161,9 +178,22 @@ void AddExpense::OnAdd()
     QString price = amountValue->text();
     int paymentChoice = paymentBox->currentIndex();
 
+    // Check whether fields are empty or not
+    if(des.isEmpty()) {
+        QMessageBox::warning(this, tr("Error"), tr("Please Enter Description"));
+        return;
+    }
+
+    if(price.isEmpty()) {
+        QMessageBox::warning(this, tr("Error"), tr("Please Enter Amount"));
+        return;
+    }
+
+    // Write Transaction to Database with all the entered information
     Transaction entry(EXPENSE,price.toDouble(),des.toStdString(),(TranCategory_t)catChoice, (PaymentType_t)paymentChoice, monthChoice, dayChoice, yearChoice);
     entry.sendTransactionToDatabase();
 
+    // Close the Window
     this->close();
 
     // Set Default

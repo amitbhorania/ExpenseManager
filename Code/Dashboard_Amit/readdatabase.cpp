@@ -4,21 +4,16 @@
 *
 * Revision History  :
 *   Date            Author              Change(Describe the changes made)
-*   05.07.2016      Ankit Luv Mittal    Added date as private member of class and
-*					extrated date from the transaction object
-*
-*
+*   05.07.2016      Ankit Luv Mittal    Added Methods of Read Database Class
 */
 
-
 #include "readdatabase.h"
-
 
 // create fileName variable corresponding to specific userName
 ReadDatabase:: ReadDatabase(string userName
                             ): userName(userName)
 {
-    this->fileName =userName + ".dat";
+    this->fileName =userName + ".csv";
 }
 
 // Load Transaction details: Date, Type, Category, Amount, Description from Database
@@ -60,6 +55,7 @@ void ReadDatabase:: ReadTransaction(Transaction& data){
     }
 }
 
+// Methods for Future Implementation
 #if 0
 // Check if user name is available
 ReadDatabase:: ChkUserName(string userName,
