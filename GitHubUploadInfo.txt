@@ -1,0 +1,11 @@
+GitHub Upload
+=============
+- All Member had uploaded their individual module on Github in seprate Folders 
+  and unfortunately, modules were uploaded to different location.
+- Final version of coded is uploaded to "ExpenseManagerFinalCode"
+- Integration is done on the base module "Code/Dashboard_Amit"
+- Graph, Add Income/Expense is uploaded to "GUI" folder
+- Backend with Standalone Testing is uploaded to "Code/ExpenseManager/Test"
+- Database is uploaded to "Code/ExpenseManager/database"
+- History of Code Upload can be seen for above folders
+- Documents, UML Design and Images are shown in "ExpenseManagerFinal/Documents/"
