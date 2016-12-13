@@ -12,23 +12,23 @@ Platform
 
 FILE STRUCTURE
 ==============
-=> ExpenseManager.pro - QT Project File
-=> main.cpp - file with main() function to Start Application
+- ExpenseManager.pro - QT Project File
+- main.cpp - file with main() function to Start Application    
 
 GUI
-=> addexpense.cpp/h	- Class to Show Expense Window 
-=> addincome.cpp/h		- Class to Show Income Window
-=> dashboard.cpp/h		- Dashboard Class to Show Dashboard & Graph
-=> qcustomplot.cpp/h	- Graph plotting Library Source and Header File
+- addexpense.cpp/h	- Class to Show Expense Window 
+- addincome.cpp/h		- Class to Show Income Window
+- dashboard.cpp/h		- Dashboard Class to Show Dashboard & Graph
+- qcustomplot.cpp/h	- Graph plotting Library Source and Header File
 
 BackEnd
-=> date.cpp/h 			- Date Class to handle Date through out the Application
-=> transaction.cpp/h 	- Transaction Class to write/read transations in Database and GUI
+- date.cpp/h 			- Date Class to handle Date through out the Application
+- transaction.cpp/h 	- Transaction Class to write/read transations in Database and GUI
 
 Database
-=> readdatabase.cpp/h	- Class to Read the Transactions from Database
-=> writedatabase.cpp/h	- Class to Write the Transactions in Database
-=> graphdata.cpp/h		- Class to Read Last Six Days, Months and Year Data from .csv file
+- readdatabase.cpp/h	- Class to Read the Transactions from Database
+- writedatabase.cpp/h	- Class to Write the Transactions in Database
+- graphdata.cpp/h		- Class to Read Last Six Days, Months and Year Data from .csv file
 
 Contribution
 ============
@@ -47,6 +47,7 @@ Ankit Luv Mittal
 
 Group Activity
 - Integration, Testing & Bug Fixing
+
 
 Design & Implementation
 =======================
